@@ -1,0 +1,18 @@
+[
+  {
+    "id" : 1,
+    "title": "Kotlin Basics",
+    "author": "John Doe",
+    "year": 2025,
+    "isAvailable": true,
+    "tags": ["Kotlin", "Programming", "Tutorial"]
+  },
+  {
+    "id" : 2,
+    "title": "Advanced Kotlin",
+    "author": "Jane Smith",
+    "year": 2026,
+    "isAvailable": false,
+    "tags": ["Kotlin", "Advanced", "Programming"]
+  }
+]
