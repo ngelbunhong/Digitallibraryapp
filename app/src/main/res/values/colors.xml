@@ -6,5 +6,6 @@
 
     <color name="blue">#007AFF</color>
 
+    <color name="splash_screen_color">#B3E7E1</color>
     <color name="transparent">#00000000</color>
 </resources>

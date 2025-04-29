@@ -9,8 +9,14 @@
         android:icon="@drawable/ic_search"
         android:title="Search" />
     <item
-        android:id="@+id/nav_offline"
-        android:icon="@drawable/ic_book"
-        android:title="Library"
+        android:id="@+id/nav_download"
+        android:icon="@drawable/ic_download"
+        android:title="download"
+        />
+
+    <item
+        android:id="@+id/nav_more"
+        android:icon="@drawable/ic_more_horizontal"
+        android:title="more"
         />
 </menu>

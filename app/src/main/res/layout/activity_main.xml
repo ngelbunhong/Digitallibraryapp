@@ -5,9 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
-    tools:openDrawer="start">
+    tools:context=".MainActivity">
 
     <!-- CoordinatorLayout as the main content container -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,22 +17,11 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
+            android:layout_height="wrap_content">
 
-            <!-- MaterialToolbar for custom app bar -->
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/top_appbar"
-                style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/transparent"
-                android:elevation="0dp"
-                app:contentInsetStart="0dp"
-                app:menu="@menu/appbar_menu"
-                app:title="Digital Library"
-                app:titleCentered="true"
-                app:titleTextColor="@color/black" />
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/appbar_layout" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- 2. Horizontal container for rail + content -->
@@ -43,28 +30,28 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!-- NavigationRailView (left side) -->
-            <com.google.android.material.navigationrail.NavigationRailView
-                android:id="@+id/navigation_rail"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:background="@color/white"
-                android:visibility="gone"
-                app:itemHorizontalTranslationEnabled="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/bottom_nav_menu" />
+<!--            &lt;!&ndash; NavigationRailView (left side) &ndash;&gt;-->
+<!--            <com.google.android.material.navigationrail.NavigationRailView-->
+<!--                android:id="@+id/navigation_rail"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:visibility="gone"-->
+<!--                app:itemHorizontalTranslationEnabled="false"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:menu="@menu/bottom_nav_menu" />-->
 
             <!-- Main content area (right of rail) -->
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/navigation_rail"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navGraph="@navigation/nav_graph" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -73,24 +60,15 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
             android:background="@color/white"
-            android:visibility="gone"
-            app:itemHorizontalTranslationEnabled="false"
+            android:visibility="visible"
+            app:itemHorizontalTranslationEnabled="true"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_nav_menu" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <!-- Navigation Drawer -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
