@@ -11,16 +11,20 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.library.digitallibrary.R
 import com.library.digitallibrary.data.adapter.AdsAdapter
+import com.library.digitallibrary.data.adapter.CardItemAdapter
 import com.library.digitallibrary.databinding.FragmentHomeLibraryBinding
+import org.intellij.lang.annotations.JdkConstants
 
 class HomeLibraryFragment : Fragment() {
     private var _binding: FragmentHomeLibraryBinding? = null
     private lateinit var viewModel: HomeViewModel
     private val binding get() = _binding!!
     private lateinit var adsAdapter: AdsAdapter
+    private lateinit var cardItemAdapter: CardItemAdapter
     private val autoScrollHelper = Handler(Looper.getMainLooper())
     private var currentPage = 0
     private val scrollerRunnable = object : Runnable {
@@ -50,7 +54,12 @@ class HomeLibraryFragment : Fragment() {
             Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
         }
 
+        cardItemAdapter = CardItemAdapter { itemClick ->
+            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+        }
+
         binding.viewPagerAds.adapter = adsAdapter
+
 
         observeViewModel()
     }
@@ -60,6 +69,8 @@ class HomeLibraryFragment : Fragment() {
             adsAdapter.submitList(ads)
             setupIndicators(ads.size)
         }
+        setupCardItemClick()
+
     }
 
 
@@ -90,6 +101,15 @@ class HomeLibraryFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun setupCardItemClick() {
+        binding.recyclerCardItem.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerCardItem.adapter = cardItemAdapter
+
+        viewModel.cardItem.observe(viewLifecycleOwner) { cardItems ->
+            cardItemAdapter.submitList(cardItems)
+        }
     }
 
     override fun onResume() {

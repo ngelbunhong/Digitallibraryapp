@@ -11,4 +11,13 @@
     <string name="nav_search">Search</string>
 
     <string name="indicator">indicator</string>
+
+    <string name="copyright_text">Copyright © 2025. All rights reserved.\n\nPowered by <b>Daun Penh Cloud</b></string>
+
+
+    <string name="ads">ads</string>
+    <string name="image_content">Images use all contents</string>
+    <string name="collection_videos">បណ្តុំ វិដេអូ</string>
+
+    <string name="collection_books">បណ្តុំ សៀវភៅ</string>
 </resources>

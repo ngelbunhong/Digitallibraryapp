@@ -16,11 +16,16 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val apiService = RetrofitClient.create(application, useMock = true)
     private val adRepository = AdRepository(apiService)  // Initialize AdRepository with apiService
 
+
     private val _book = MutableLiveData<List<Book>>()
     val book: LiveData<List<Book>> get() = _book
 
     private val _ads = MutableLiveData<List<Ads>>()
     val ads: LiveData<List<Ads>> get() = _ads
+
+    private val _cardItem = MutableLiveData<List<Ads>>()
+    val cardItem: LiveData<List<Ads>> get() = _cardItem
+
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
@@ -30,6 +35,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         fetchAds()
+        fetchCardItem()
     }
 
     private fun fetchAds() {
@@ -37,7 +43,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         _error.value = null
         viewModelScope.launch {
             try {
-                val adList =  mockAds()
+                val adList = mockAds()
                 _ads.value = adList
             } catch (e: Exception) {
                 _error.value = "Fail to load: ${e.message}"
@@ -47,14 +53,39 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun mockAds(): List<Ads> {
+    private fun fetchCardItem() {
+        _isLoading.value = true
+        _error.value = null
+        viewModelScope.launch {
+            try {
+                val cardItem = mockCardItems()
+                _cardItem.value = cardItem
+            } catch (e: Exception) {
+                _error.value = "Fail to load: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    private fun mockCardItems(): List<Ads> {
         return listOf(
-            Ads(1, "Ad 1", imageResId = R.drawable.ic_slide,"ad 1"),
-            Ads(2, "Ad 2", imageResId = R.drawable.ic_slide,"ad 2"),
-            Ads(3, "Ad 3", imageResId = R.drawable.ic_slide,"ad 3")
+            Ads(
+                1,
+                imageResId = R.drawable.card_video,
+                title = R.string.collection_videos.toString()
+            ),
+            Ads(2, imageResId = R.drawable.card_book, title = R.string.collection_books.toString()),
         )
     }
 
+    private fun mockAds(): List<Ads> {
+        return listOf(
+            Ads(1, "Ad 1", imageResId = R.drawable.ic_slide, "ad 1"),
+            Ads(2, "Ad 2", imageResId = R.drawable.ic_slide, "ad 2"),
+            Ads(3, "Ad 3", imageResId = R.drawable.ic_slide, "ad 3")
+        )
+    }
 
 
     private fun loadBooks() {
