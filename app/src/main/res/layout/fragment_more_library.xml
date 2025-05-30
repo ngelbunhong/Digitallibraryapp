@@ -10,6 +10,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="25sp"
-        android:text="more" />
+        android:text="@string/nav_more" />
 
 </FrameLayout>

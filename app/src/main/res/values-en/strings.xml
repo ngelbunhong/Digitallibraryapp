@@ -4,5 +4,11 @@
 
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
-    <string name="main_screen">Home</string>
+    <string name="nav_home">Home</string>
+
+    <string name="nav_more">More</string>
+    <string name="nav_downloaded">Downloaded</string>
+    <string name="nav_search">Search</string>
+
+    <string name="indicator">indicator</string>
 </resources>

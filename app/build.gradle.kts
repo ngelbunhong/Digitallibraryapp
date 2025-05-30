@@ -13,6 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.library.digitallibrary"
         minSdk = 24
+        //noinspection OldTargetApi
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -51,6 +52,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,5 +74,11 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    //ViewPager2
+    implementation ("androidx.viewpager2:viewpager2:1.1.0")
+
+    //Glide Image
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
 }

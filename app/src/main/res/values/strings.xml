@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Digital Library</string>
-
     <string name="navigation_drawer_open">បើក</string>
     <string name="navigation_drawer_close">បិទ</string>
-    <string name="main_screen">ផ្ទះ</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="nav_home">ផ្ទះ</string>
+    <string name="nav_search">ស្វែងរក</string>
+    <string name="nav_more">ច្រើនទៀត</string>
+    <string name="nav_downloaded">ទាញយកហើយ</string>
+
+    <string name="indicator">indicator</string>
+    <string name="ads">ads</string>
 </resources>
