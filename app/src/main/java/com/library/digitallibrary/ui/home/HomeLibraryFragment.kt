@@ -3,6 +3,7 @@ package com.library.digitallibrary.ui.home
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,6 @@ import com.library.digitallibrary.R
 import com.library.digitallibrary.data.adapter.AdsAdapter
 import com.library.digitallibrary.data.adapter.CardItemAdapter
 import com.library.digitallibrary.databinding.FragmentHomeLibraryBinding
-import org.intellij.lang.annotations.JdkConstants
 
 class HomeLibraryFragment : Fragment() {
     private var _binding: FragmentHomeLibraryBinding? = null
@@ -56,6 +56,7 @@ class HomeLibraryFragment : Fragment() {
 
         cardItemAdapter = CardItemAdapter { itemClick ->
             Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+            Log.e("TAG","ItemClickData $itemClick")
         }
 
         binding.viewPagerAds.adapter = adsAdapter
@@ -104,6 +105,7 @@ class HomeLibraryFragment : Fragment() {
     }
 
     private fun setupCardItemClick() {
+
         binding.recyclerCardItem.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerCardItem.adapter = cardItemAdapter
 

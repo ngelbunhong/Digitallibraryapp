@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Digital Library</string>
+    <string name="navigation_drawer_open">បើក</string>
+    <string name="navigation_drawer_close">បិទ</string>
+
+
+    <string name="nav_home">ផ្ទះ</string>
+    <string name="nav_search">ស្វែងរក</string>
+    <string name="nav_more">ច្រើនទៀត</string>
+    <string name="nav_downloaded">ទាញយកហើយ</string>
+
+    <string name="indicator">indicator</string>
+    <string name="ads">ads</string>
+    <string name="image_content">Images use all contents</string>
+
+    <string name="collection_videos">បណ្តុំ វិដេអូ</string>
+
+    <string name="collection_books">បណ្តុំ សៀវភៅ</string>
+
+
+    <string name="copyright_text">Copyright © 2025. All rights reserved.\n\nPowered by <b>Daun Penh Cloud</b></string>
+
+
+</resources>

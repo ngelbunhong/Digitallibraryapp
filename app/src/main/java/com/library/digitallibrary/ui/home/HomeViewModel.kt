@@ -58,8 +58,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         _error.value = null
         viewModelScope.launch {
             try {
-                val cardItem = mockCardItems()
-                _cardItem.value = cardItem
+                val data = mockCardItems()
+                _cardItem.value = data
             } catch (e: Exception) {
                 _error.value = "Fail to load: ${e.message}"
             } finally {
@@ -71,11 +71,15 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private fun mockCardItems(): List<Ads> {
         return listOf(
             Ads(
-                1,
+                id = 1,
                 imageResId = R.drawable.card_video,
-                title = R.string.collection_videos.toString()
+                titleResId = R.string.collection_videos  // Resource ID
             ),
-            Ads(2, imageResId = R.drawable.card_book, title = R.string.collection_books.toString()),
+            Ads(
+                id = 2,
+                imageResId = R.drawable.card_book,
+                titleResId = R.string.collection_books  // Resource ID
+            )
         )
     }
 

@@ -30,7 +30,7 @@ class CardItemAdapter(private val onClicked: (Ads) -> Unit) :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(cardItem: Ads) {
             binding.imageItem.setImageResource(cardItem.imageResId!!)
-            binding.titleText.text = cardItem.title
+            binding.titleText.setText(cardItem.titleResId!!)
             binding.root.setOnClickListener {
                 cardItemClicked(cardItem)
             }
