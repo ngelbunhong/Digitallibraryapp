@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppNavigationRailStyle" parent="Widget.Material3.NavigationRailView">
+            <item name="itemMinHeight">88dp</item> <!-- Try values like 88dp or more -->
+            <item name="itemIconSize">24dp</item>
+            <item name="itemPaddingTop">8dp</item>
+            <item name="itemPaddingBottom">8dp</item>
+            <!-- Other styles -->
+    </style>
+
+
+
+    <style name="CircleActiveIndicator" parent="">
+        <item name="android:width">56dp</item>
+        <item name="android:height">56dp</item>
+        <item name="android:color">@color/selected_item_bg</item> <!-- Or transparent if needed -->
+        <item name="shapeAppearance">@style/CircleShape</item>
+    </style>
+
+    <!-- Define a full circle shape -->
+    <style name="CircleShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>
+

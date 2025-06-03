@@ -66,7 +66,27 @@ class MainActivity : AppCompatActivity() {
             // Tablet Layout: Show Navigation Rail, Hide Bottom Nav
             binding.bottomNav.visibility = View.GONE
             binding.navigationRail.visibility = View.VISIBLE
-            binding.navigationRail.setupWithNavController(navController)
+
+            val itemList = listOf(
+                R.drawable.ic_home to "Home",
+                R.drawable.ic_search to "Search",
+                R.drawable.ic_download to "Downloaded",
+                R.drawable.ic_more_horizontal to "More"
+            )
+
+            binding.navigationRail.setItems(itemList)
+
+            binding.navigationRail.setOnItemSelectedListener { index ->
+                val destination = when (index) {
+                    0 -> R.id.nav_home
+                    1 -> R.id.nav_search
+                    2 -> R.id.nav_download
+                    3 -> R.id.nav_more
+                    else -> R.id.nav_home
+                }
+                navController.navigate(destination)
+            }
+
 
             // Adjust fragment container to start after rail
             binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
@@ -84,6 +104,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
+
+
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun setupEdgeToEdge() {
@@ -104,13 +128,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun dpToPx(dp: Int): Int {
-        return (dp * resources.displayMetrics.density).toInt()
-    }
-
     private fun isTablet(): Boolean {
         // Check if device is a tablet (sw600dp or larger)
         return resources.configuration.smallestScreenWidthDp >= 600
+    }
+
+    // Utility function for dp to px conversion
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 
     override fun onSupportNavigateUp(): Boolean {

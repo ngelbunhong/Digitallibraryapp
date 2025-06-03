@@ -4,6 +4,8 @@
     <color name="primary">#FDF8F5</color>
 
     <color name="navigation_color">#F0E5DB</color>
+    <color name="selected_item_bg">#EFC7A3</color>
+    <color name="unselected_item_bg">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
 
     <color name="black">#FF000000</color>
