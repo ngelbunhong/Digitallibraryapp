@@ -21,5 +21,10 @@
 
     <string name="copyright_text">Copyright © 2025. All rights reserved.\n\nPowered by <b>Daun Penh Cloud</b></string>
 
+    <string name="example_text">ឧទាហរណ៍</string>
+
+    <string name="watch_now">មើលឥឡូវនេះ</string>
+
+    <string name="title_value"><b>Title : </b>%1s</string>
 
 </resources>

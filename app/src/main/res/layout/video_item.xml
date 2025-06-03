@@ -18,7 +18,7 @@
             android:layout_width="175dp"
             android:layout_height="125dp"
             android:background="@drawable/image_rectangle_style"
-            android:contentDescription="thumbnailUrl"
+            android:contentDescription="@string/image_content"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -29,6 +29,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title : "
@@ -36,6 +37,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/author_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -43,37 +45,27 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_recycler_view"
+            <View
                 android:layout_width="match_parent"
-                android:visibility="visible"
-                android:layout_height="wrap_content" />
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <LinearLayout
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/myButton"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginEnd="12dp"
+                android:backgroundTint="@color/blue"
+                android:text="@string/watch_now"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_navigate_next_page"
+                app:iconGravity="textEnd"
+                app:iconSize="24dp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/myButton"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:backgroundTint="@color/blue"
-                    android:text="Watch now"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
-                    app:cornerRadius="16dp"
-                    app:icon="@drawable/ic_navigate_next_page"
-                    app:iconGravity="textEnd" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_check_circle" />
-            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
@@ -81,8 +73,8 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:dividerColor="@color/black"
+        android:layout_marginTop="7dp"
         android:alpha="0.5"
-        android:layout_marginTop="7dp" />
+        app:dividerColor="@color/black" />
 
 </LinearLayout>

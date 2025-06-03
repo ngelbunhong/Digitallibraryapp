@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="app_name">Digital Library</string>
+    <string name="app_name">Digital Library</string>
 
-<string name="navigation_drawer_open">Open</string>
-<string name="navigation_drawer_close">Close</string>
-<string name="nav_home">Home</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="nav_home">Home</string>
 
-<string name="nav_more">More</string>
-<string name="nav_downloaded">Downloaded</string>
-<string name="nav_search">Search</string>
+    <string name="nav_more">More</string>
+    <string name="nav_downloaded">Downloaded</string>
+    <string name="nav_search">Search</string>
 
-<string name="indicator">indicator</string>
+    <string name="indicator">indicator</string>
 
-<string name="copyright_text">Copyright © 2025. All rights reserved.\n\nPowered by <b>Daun Penh Cloud</b></string>
+    <string name="copyright_text">Copyright © 2025. All rights reserved.\n\nPowered by <b>Daun Penh Cloud</b></string>
 
 
-<string name="ads">ads</string>
-<string name="image_content">Images use all contents</string>
-<string name="collection_videos">Videos Collection</string>
+    <string name="ads">ads</string>
+    <string name="image_content">Images use all contents</string>
+    <string name="collection_videos">Videos Collection</string>
 
-<string name="collection_books">Books Collection</string>
+    <string name="collection_books">Books Collection</string>
+
+    <string name="example_text">Example</string>
+
+    <string name="watch_now">Watch Now</string>
+
+    <string name="title_value"><b>Title :</b> %1s</string>
+
 </resources>

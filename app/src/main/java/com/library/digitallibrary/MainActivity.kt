@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -15,17 +14,22 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.library.digitallibrary.databinding.ActivityMainBinding
+import androidx.core.view.WindowCompat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private var isRailVisible = false
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        enableEdgeToEdge()
+
+        // Enable edge-to-edge layout
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         initView()
         setupEdgeToEdge()
     }
@@ -53,6 +57,13 @@ class MainActivity : AppCompatActivity() {
             logo.maxHeight = dpToPx(40)
         }
 
+        // 🔘 Menu icon to toggle NavigationRail
+        toolbar.setNavigationOnClickListener {
+            if (isTablet()) {
+                toggleRail()
+            }
+        }
+
         // Setup Navigation
         setupNavigation()
     }
@@ -65,7 +76,8 @@ class MainActivity : AppCompatActivity() {
         if (isTablet()) {
             // Tablet Layout: Show Navigation Rail, Hide Bottom Nav
             binding.bottomNav.visibility = View.GONE
-            binding.navigationRail.visibility = View.VISIBLE
+            binding.navigationRail.visibility = View.GONE
+            isRailVisible = false
 
             val itemList = listOf(
                 R.drawable.ic_home to "Home",
@@ -87,7 +99,6 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(destination)
             }
 
-
             // Adjust fragment container to start after rail
             binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 startToEnd = R.id.navigation_rail
@@ -96,6 +107,8 @@ class MainActivity : AppCompatActivity() {
             // Phone Layout: Show Bottom Nav, Hide Navigation Rail
             binding.navigationRail.visibility = View.GONE
             binding.bottomNav.visibility = View.VISIBLE
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            supportActionBar?.setHomeButtonEnabled(false)
             binding.bottomNav.setupWithNavController(navController)
 
             // Reset fragment container constraints
@@ -105,20 +118,44 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-
+    private fun toggleRail() {
+        if (isRailVisible) {
+            // 🔽 Hide rail with fade out
+            binding.navigationRail.animate()
+                .alpha(0f)
+                .setDuration(150)
+                .withEndAction {
+                    binding.navigationRail.visibility = View.GONE
+                    isRailVisible = false
+                }
+                .start()
+        } else {
+            // 🔼 Show rail with fade in
+            binding.navigationRail.alpha = 0f
+            binding.navigationRail.visibility = View.VISIBLE
+            binding.navigationRail.animate()
+                .alpha(1f)
+                .setDuration(150)
+                .withEndAction {
+                    isRailVisible = true
+                }
+                .start()
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun setupEdgeToEdge() {
         // Handle edge-to-edge insets
         binding.root.setOnApplyWindowInsetsListener { view, insets ->
             val systemBars = insets.getInsets(android.view.WindowInsets.Type.systemBars())
+
+            // Apply padding to the root view to account for system bars
             view.updatePadding(
                 left = systemBars.left,
                 right = systemBars.right
             )
 
+            // Adjust bottom padding for the bottom navigation if not a tablet
             if (!isTablet()) {
                 binding.bottomNav.updatePadding(
                     bottom = systemBars.bottom
