@@ -25,6 +25,8 @@
 
     <string name="watch_now">Watch Now</string>
 
+    <string name="search_lbl">Search</string>
+
     <string name="title_value"><b>Title :</b> %1s</string>
 
 </resources>

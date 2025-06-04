@@ -81,4 +81,7 @@ dependencies {
     //Glide Image
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
+    //AndroidSVG
+    implementation ("com.caverock:androidsvg-aar:1.4")
+
 }

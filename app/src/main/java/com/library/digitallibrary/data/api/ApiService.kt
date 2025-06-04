@@ -1,9 +1,8 @@
 package com.library.digitallibrary.data.api
 
-import com.library.digitallibrary.R
 import com.library.digitallibrary.data.models.ads.Ads
 import com.library.digitallibrary.data.models.book.Book
-import retrofit2.Call
+import com.library.digitallibrary.data.models.video.Video
 import retrofit2.http.GET
 
 interface ApiService {
@@ -13,6 +12,10 @@ interface ApiService {
 
     @GET("mock/books")
     suspend fun mockBooks(): List<Book>
+
+    @GET("mock/videos")
+    suspend fun mockVideos(): List<Video>
+
 
     @GET("ads")
     suspend fun getAds(): List<Ads>

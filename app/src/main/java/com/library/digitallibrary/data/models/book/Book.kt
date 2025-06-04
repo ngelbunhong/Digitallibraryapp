@@ -8,6 +8,7 @@ data class Book(
     val id: Int,
     val title: String,
     val author: String,
+    val thumbnail: String,
     val year: Int,
     val isAvailable: Boolean,
     val tags: List<String>

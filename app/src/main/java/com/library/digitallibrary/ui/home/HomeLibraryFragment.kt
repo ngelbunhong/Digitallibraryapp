@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.library.digitallibrary.R
 import com.library.digitallibrary.data.adapter.AdsAdapter
+import com.library.digitallibrary.data.adapter.BookAdapter
 import com.library.digitallibrary.data.adapter.CardItemAdapter
+import com.library.digitallibrary.data.adapter.MixedContentAdapter
 import com.library.digitallibrary.databinding.FragmentHomeLibraryBinding
 
 class HomeLibraryFragment : Fragment() {
@@ -25,6 +27,10 @@ class HomeLibraryFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adsAdapter: AdsAdapter
     private lateinit var cardItemAdapter: CardItemAdapter
+    private lateinit var bookAdapter: BookAdapter
+
+    //    private lateinit var dataAdapter: MixedContentAdapter
+
     private val autoScrollHelper = Handler(Looper.getMainLooper())
     private var currentPage = 0
     private val scrollerRunnable = object : Runnable {
@@ -50,19 +56,35 @@ class HomeLibraryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
-        adsAdapter = AdsAdapter { ads ->
-            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
-        }
 
-        cardItemAdapter = CardItemAdapter { itemClick ->
-            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
-            Log.e("TAG","ItemClickData $itemClick")
-        }
+        setupEventListener()
+        setupAllAdapters()
+        observeViewModel()
+    }
 
+    private fun setupAllAdapters() {
+
+        // ads adapter
         binding.viewPagerAds.adapter = adsAdapter
 
+        // card adapter
+        binding.recyclerCardItem.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerCardItem.adapter = cardItemAdapter
 
-        observeViewModel()
+        // book adapter
+        binding.recyclerViewBook.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL, false
+        )
+
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewBook.layoutManager = layoutManager
+        binding.recyclerViewBook.adapter = bookAdapter
+
+        (binding.recyclerViewBook.itemAnimator as? androidx.recyclerview.widget.SimpleItemAnimator)?.supportsChangeAnimations =
+            false
+
     }
 
     private fun observeViewModel() {
@@ -70,8 +92,31 @@ class HomeLibraryFragment : Fragment() {
             adsAdapter.submitList(ads)
             setupIndicators(ads.size)
         }
-        setupCardItemClick()
+        viewModel.cardItem.observe(viewLifecycleOwner) { cardItems ->
+            cardItemAdapter.submitList(cardItems)
+        }
 
+        viewModel.books.observe(viewLifecycleOwner) { books ->
+            bookAdapter.submitList(books)
+        }
+
+    }
+
+    private fun setupEventListener() {
+        adsAdapter = AdsAdapter { ads ->
+            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+            Log.e("TAG", "ItemClickData $ads")
+        }
+
+        cardItemAdapter = CardItemAdapter { itemClick ->
+            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+            Log.e("TAG", "ItemClickData $itemClick")
+        }
+
+        bookAdapter = BookAdapter { books ->
+            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+            Log.e("TAG", "ItemClickData $books")
+        }
     }
 
 
@@ -102,16 +147,6 @@ class HomeLibraryFragment : Fragment() {
             }
 
         })
-    }
-
-    private fun setupCardItemClick() {
-
-        binding.recyclerCardItem.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerCardItem.adapter = cardItemAdapter
-
-        viewModel.cardItem.observe(viewLifecycleOwner) { cardItems ->
-            cardItemAdapter.submitList(cardItems)
-        }
     }
 
     override fun onResume() {

@@ -5,6 +5,7 @@ import java.io.Serializable
 data class Video(
     val id: Int,
     val title: String,
+    val author: String,
     val thumbnailUrl: String,
     val duration: String
 ): Serializable

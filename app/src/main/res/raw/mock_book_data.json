@@ -3,6 +3,7 @@
     "id" : 1,
     "title": "Kotlin Basics",
     "author": "John Doe",
+    "thumbnail": "",
     "year": 2025,
     "isAvailable": true,
     "tags": ["Kotlin", "Programming", "Tutorial"]
@@ -11,8 +12,27 @@
     "id" : 2,
     "title": "Advanced Kotlin",
     "author": "Jane Smith",
+    "thumbnail": "",
     "year": 2026,
     "isAvailable": false,
     "tags": ["Kotlin", "Advanced", "Programming"]
+  },
+  {
+    "id" : 3,
+    "title": "Basic Java",
+    "author": "Jane Smith",
+    "thumbnail": "",
+    "year": 2025,
+    "isAvailable": true,
+    "tags": ["Java", "Advanced", "Programming"]
+  },
+  {
+    "id" : 4,
+    "title": "Advanced Java",
+    "author": "Jane Smith",
+    "thumbnail": "",
+    "year": 2026,
+    "isAvailable": false,
+    "tags": ["Java", "Advanced", "Programming"]
   }
 ]

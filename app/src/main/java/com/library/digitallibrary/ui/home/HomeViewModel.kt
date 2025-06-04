@@ -6,19 +6,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.digitallibrary.R
-import com.library.digitallibrary.data.local.repository.AdRepository
 import com.library.digitallibrary.data.models.ads.Ads
 import com.library.digitallibrary.data.models.book.Book
+import com.library.digitallibrary.data.models.home.HomeItem
+import com.library.digitallibrary.data.models.video.Video
 import com.library.digitallibrary.data.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val apiService = RetrofitClient.create(application, useMock = true)
-    private val adRepository = AdRepository(apiService)  // Initialize AdRepository with apiService
 
+    private val _books = MutableLiveData<List<Book>>()
+    val books: LiveData<List<Book>> = _books
 
-    private val _book = MutableLiveData<List<Book>>()
-    val book: LiveData<List<Book>> get() = _book
+    private val _items = MutableLiveData<List<HomeItem>>()
+    val items: LiveData<List<HomeItem>> = _items
 
     private val _ads = MutableLiveData<List<Ads>>()
     val ads: LiveData<List<Ads>> get() = _ads
@@ -36,6 +38,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     init {
         fetchAds()
         fetchCardItem()
+        fetchData()
     }
 
     private fun fetchAds() {
@@ -68,6 +71,30 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private fun fetchData() {
+        _isLoading.value = true
+        _error.value = null
+        viewModelScope.launch {
+            try {
+                val books = apiService.mockBooks()
+                val videos = apiService.mockVideos()
+
+                _books.value = books
+
+                val combinedList = mutableListOf<HomeItem>()
+                combinedList.addAll(books.map { HomeItem.BookItem(it) })
+                combinedList.addAll(videos.map { HomeItem.VideoItem(it) })
+
+                _items.value = combinedList
+
+            } catch (e: Exception) {
+                _error.value = "Fail to load: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
     private fun mockCardItems(): List<Ads> {
         return listOf(
             Ads(
@@ -89,21 +116,5 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             Ads(2, "Ad 2", imageResId = R.drawable.ic_slide, "ad 2"),
             Ads(3, "Ad 3", imageResId = R.drawable.ic_slide, "ad 3")
         )
-    }
-
-
-    private fun loadBooks() {
-        _isLoading.value = true
-        _error.value = null
-        viewModelScope.launch {
-            try {
-                val books = apiService.mockBooks()
-                _book.value = books
-            } catch (e: Exception) {
-                _error.value = "Fail to load: ${e.message}"
-            } finally {
-                _isLoading.value = false
-            }
-        }
     }
 }
