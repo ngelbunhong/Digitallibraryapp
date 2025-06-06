@@ -12,24 +12,33 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.library.digitallibrary.MainActivity
 import com.library.digitallibrary.R
 import com.library.digitallibrary.data.adapter.AdsAdapter
 import com.library.digitallibrary.data.adapter.BookAdapter
 import com.library.digitallibrary.data.adapter.CardItemAdapter
 import com.library.digitallibrary.data.adapter.MixedContentAdapter
+import com.library.digitallibrary.data.adapter.VideoAdapter
+import com.library.digitallibrary.data.models.book.Book
+import com.library.digitallibrary.data.models.home.HomeItem
+import com.library.digitallibrary.data.models.video.Video
 import com.library.digitallibrary.databinding.FragmentHomeLibraryBinding
 
 class HomeLibraryFragment : Fragment() {
     private var _binding: FragmentHomeLibraryBinding? = null
-    private lateinit var viewModel: HomeViewModel
     private val binding get() = _binding!!
+    private lateinit var viewModel: HomeViewModel
     private lateinit var adsAdapter: AdsAdapter
     private lateinit var cardItemAdapter: CardItemAdapter
+    private lateinit var mixedContentAdapter: MixedContentAdapter
     private lateinit var bookAdapter: BookAdapter
+    private lateinit var videoAdapter: VideoAdapter
 
-    //    private lateinit var dataAdapter: MixedContentAdapter
 
     private val autoScrollHelper = Handler(Looper.getMainLooper())
     private var currentPage = 0
@@ -52,17 +61,29 @@ class HomeLibraryFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
 
-        setupEventListener()
-        setupAllAdapters()
+        initializeAdapters()
+        setupRecyclerViews()
         observeViewModel()
     }
 
-    private fun setupAllAdapters() {
+    private fun isTablet(): Boolean {
+        return resources.configuration.smallestScreenWidthDp >= 600
+    }
+
+    private fun setupRecyclerViews() {
+
+        // --- Get Span Counts from Resources ---
+        val videoSpanCount = resources.getInteger(R.integer.video_grid_span_count)
+
+        // You can do the same for collectionSpanCount if you like!
+        // For now, let's keep it programmatic to show both techniques can coexist.
+        val collectionSpanCount = if (isTablet()) 3 else 2
 
         // ads adapter
         binding.viewPagerAds.adapter = adsAdapter
@@ -72,37 +93,89 @@ class HomeLibraryFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerCardItem.adapter = cardItemAdapter
 
-        // book adapter
-        binding.recyclerViewBook.layoutManager = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.HORIZONTAL, false
-        )
+        //Collection Item
+        binding.recyclerViewCollection.layoutManager =
+            GridLayoutManager(
+                requireContext(),
+                1,
+                RecyclerView.HORIZONTAL,
+                false
+            ) // Or your 2-column grid for mixed items
+        binding.recyclerViewCollection.adapter = mixedContentAdapter
 
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerViewBook.layoutManager = layoutManager
+        // video adapter grid
+        binding.recyclerViewVideo.layoutManager =
+            GridLayoutManager(requireContext(), videoSpanCount) // Explicitly vertical
+        binding.recyclerViewVideo.adapter = videoAdapter
+
+        // book adapter
+        binding.recyclerViewBook.layoutManager =
+            GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
         binding.recyclerViewBook.adapter = bookAdapter
 
-        (binding.recyclerViewBook.itemAnimator as? androidx.recyclerview.widget.SimpleItemAnimator)?.supportsChangeAnimations =
-            false
+
+        // Add these lines to disable internal scrolling on the RecyclerViews
+        binding.recyclerCardItem.isNestedScrollingEnabled = false
+        binding.recyclerViewCollection.isNestedScrollingEnabled = false
+        binding.recyclerViewVideo.isNestedScrollingEnabled = false
+        binding.recyclerViewBook.isNestedScrollingEnabled = false
+
 
     }
 
     private fun observeViewModel() {
+
+        //Ads
         viewModel.ads.observe(viewLifecycleOwner) { ads ->
             adsAdapter.submitList(ads)
             setupIndicators(ads.size)
         }
+
+        //Card Collection
         viewModel.cardItem.observe(viewLifecycleOwner) { cardItems ->
             cardItemAdapter.submitList(cardItems)
         }
 
+        //Mix Videos and Boos
+        viewModel.items.observe(viewLifecycleOwner) { collection ->
+            Log.d(
+                "HomeFragment_Observer",
+                "Received collection for MixedContentAdapter. Size: ${collection.size}"
+            )
+            if (collection.isNotEmpty()) {
+                collection.forEachIndexed { index, item ->
+                    val title =
+                        if (item is HomeItem.BookItem) item.book.title else if (item is HomeItem.VideoItem) item.video.title else "Unknown Item"
+                    val timestamp = try {
+                        item.getTimestamp()
+                    } catch (e: Exception) {
+                        "No Timestamp"
+                    }
+                    Log.d(
+                        "HomeFragment_Observer",
+                        "Item $index: $title, Type: ${item.javaClass.simpleName}, Timestamp: $timestamp"
+                    )
+                }
+            } else {
+                Log.d("HomeFragment_Observer", "Received empty collection for MixedContentAdapter.")
+            }
+            mixedContentAdapter.submitList(collection)
+        }
+
+        //Videos
+        viewModel.videos.observe(viewLifecycleOwner) { videos ->
+            videoAdapter.submitList(videos)
+        }
+
+        //Books
         viewModel.books.observe(viewLifecycleOwner) { books ->
             bookAdapter.submitList(books)
         }
 
+
     }
 
-    private fun setupEventListener() {
+    private fun initializeAdapters() {
         adsAdapter = AdsAdapter { ads ->
             Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
             Log.e("TAG", "ItemClickData $ads")
@@ -113,12 +186,33 @@ class HomeLibraryFragment : Fragment() {
             Log.e("TAG", "ItemClickData $itemClick")
         }
 
+        mixedContentAdapter = MixedContentAdapter(object : MixedContentAdapter.ItemClickListener {
+            override fun onBookClicked(book: Book) {
+                navigateToBookDetails(bookId = book.id)
+                Toast.makeText(requireContext(), "Clicked Book: ${book.title}", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d("HomeLibraryFragment", "MixedContent Book Clicked: ${book.title}")
+            }
+
+            override fun onVideoClicked(video: Video) {
+
+                navigateToVideoDetails(videoId = video.id)
+                Toast.makeText(requireContext(), "Clicked Book: ${video.title}", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d("HomeLibraryFragment", "MixedContent Book Clicked: ${video.title}")
+            }
+        })
+
         bookAdapter = BookAdapter { books ->
             Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
             Log.e("TAG", "ItemClickData $books")
         }
-    }
 
+        videoAdapter = VideoAdapter { videos ->
+            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+            Log.e("TAG", "ItemClickData $videos")
+        }
+    }
 
     private fun setupIndicators(size: Int) {
         binding.indicatorLayout.removeAllViews()
@@ -149,8 +243,28 @@ class HomeLibraryFragment : Fragment() {
         })
     }
 
+    // Create these helper functions for navigation
+    private fun navigateToBookDetails(bookId: Int) {
+        // Use the generated Directions class to create the action, passing the bookId
+        val action = HomeLibraryFragmentDirections.actionHomeToDetail(bookId = bookId)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToVideoDetails(videoId: Int) {
+        // Use the generated Directions class, this time passing the videoId
+        // The bookId will automatically use its default value of -1
+        val action = HomeLibraryFragmentDirections.actionHomeToDetail(videoId = videoId)
+        findNavController().navigate(action)
+    }
+
     override fun onResume() {
         super.onResume()
+        val mainActivity = activity as? MainActivity
+        if (mainActivity?.isTablet() == true) {
+            mainActivity.updateToolbar(MainActivity.ToolbarState.HomeTablet)
+        } else {
+            mainActivity?.updateToolbar(MainActivity.ToolbarState.HomePhone)
+        }
         autoScrollHelper.postDelayed(scrollerRunnable, 5000)
     }
 

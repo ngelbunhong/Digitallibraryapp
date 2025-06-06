@@ -31,11 +31,7 @@ class BookAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.vertical_item, parent, false)
-
-        val screenWidth = parent.resources.displayMetrics.widthPixels
-        val itemWidth = screenWidth / 4
-        view.layoutParams = ViewGroup.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
+            .inflate(R.layout.book_item, parent, false)
         return BookViewHolder(view)
     }
 

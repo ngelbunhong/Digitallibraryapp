@@ -1,6 +1,7 @@
 package com.library.digitallibrary.ui.home
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +19,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _books = MutableLiveData<List<Book>>()
     val books: LiveData<List<Book>> = _books
+
+    private val _videos = MutableLiveData<List<Video>>()
+    val videos: LiveData<List<Video>> = _videos
 
     private val _items = MutableLiveData<List<HomeItem>>()
     val items: LiveData<List<HomeItem>> = _items
@@ -79,13 +83,27 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 val books = apiService.mockBooks()
                 val videos = apiService.mockVideos()
 
+                Log.e("TAG", "Videos $videos")
+
+
                 _books.value = books
+                _videos.value = videos
+
+                // Map books and videos to their respective HomeItem types
+                val bookHomeItems = books.map { HomeItem.BookItem(it) }
+                val videoHomeItems = videos.map { HomeItem.VideoItem(it) }
+
 
                 val combinedList = mutableListOf<HomeItem>()
-                combinedList.addAll(books.map { HomeItem.BookItem(it) })
-                combinedList.addAll(videos.map { HomeItem.VideoItem(it) })
+                combinedList.addAll(bookHomeItems)
+                combinedList.addAll(videoHomeItems)
 
-                _items.value = combinedList
+                val sortedItems = combinedList.sortedByDescending { it.getTimestamp() }
+
+                // Take only the top 5 newest items
+                val top5NewestItems = sortedItems.take(5)
+
+                _items.value = top5NewestItems
 
             } catch (e: Exception) {
                 _error.value = "Fail to load: ${e.message}"
@@ -99,12 +117,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         return listOf(
             Ads(
                 id = 1,
-                imageResId = R.drawable.card_video,
+                imageResId = R.drawable.ic_group_click,
                 titleResId = R.string.collection_videos  // Resource ID
             ),
             Ads(
                 id = 2,
-                imageResId = R.drawable.card_book,
+                imageResId = R.drawable.ic_text_books,
                 titleResId = R.string.collection_books  // Resource ID
             )
         )

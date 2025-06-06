@@ -59,35 +59,21 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/bottom_nav"
                 app:layout_constraintStart_toEndOf="@id/navigation_rail"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navGraph="@navigation/nav_graph" />
 
-            <!-- ✅ BottomNavigationView moved inside ConstraintLayout -->
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_nav"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:background="@color/navigation_color"
                 android:visibility="gone"
                 app:itemHorizontalTranslationEnabled="true"
                 app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/bottom_nav_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@menu/bottom_nav_menu" />
-
-            <!-- ✅ Copyright TextView above BottomNav -->
-            <TextView
-                android:id="@+id/copyright_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:padding="8dp"
-                android:text="@string/copyright_text"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@id/bottom_nav"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

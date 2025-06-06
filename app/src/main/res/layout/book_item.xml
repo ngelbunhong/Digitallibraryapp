@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
+    <!-- CardView wrapping ImageView -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="165dp"
+        android:layout_height="130dp"
+        android:layout_gravity="start"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/item_testing_image" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <!-- Author -->
+    <TextView
+        android:id="@+id/item_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Author"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:maxLines="1"
+        android:ellipsize="end" />
 </LinearLayout>

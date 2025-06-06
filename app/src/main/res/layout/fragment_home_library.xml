@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <!-- CardView with ViewPager2 -->
             <androidx.cardview.widget.CardView
@@ -30,7 +30,8 @@
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPagerAds"
@@ -53,11 +54,12 @@
             <!-- RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_card_item"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="@dimen/margin_16"
+                android:overScrollMode="never"
                 android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,29 +69,30 @@
 
             <!-- Box with Rounded Corners -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/videoBox"
+                android:id="@+id/collectionBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/selected_item_bg"
                 android:layout_marginBottom="16dp"
+                android:background="@color/selected_item_bg"
+                android:backgroundTint="@color/secondPrimary"
                 android:padding="16dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
+                app:cardElevation="0dp"
                 app:layout_constraintTop_toBottomOf="@id/recycler_card_item">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:background="@color/transparent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent">
 
                     <!-- Title: New Videos -->
                     <TextView
-                        android:id="@+id/titleNewVideos"
+                        android:id="@+id/titleCollection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
-                        android:text="New Videos"
+                        android:text="New Collections"
                         android:textColor="@android:color/black"
                         android:textSize="30sp"
                         android:textStyle="bold"
@@ -103,27 +106,134 @@
                         android:layout_marginEnd="12dp"
                         android:backgroundTint="@color/transparent"
                         android:contentDescription="@string/image_content"
-                        android:src="@drawable/ic_navigate_next_page"
+                        android:src="@drawable/ic_navigate_next_50"
+                        app:layout_constraintBottom_toBottomOf="@id/titleCollection"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/titleNewVideos"
-                        app:layout_constraintTop_toTopOf="@id/titleNewVideos" />
+                        app:layout_constraintTop_toTopOf="@id/titleCollection" />
+
+                    <!-- RecyclerView for Video List -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewCollection"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/transparent"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleCollection"
+                        tools:itemCount="4" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Title: New Videos -->
+            <TextView
+                android:id="@+id/titleNewVideos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/collection_videos"
+                android:textColor="@android:color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/collectionBox" />
+
+            <!-- RecyclerView for Video List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewVideo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/transparent"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleNewVideos"
+                tools:itemCount="4" />
+
+
+            <!-- Box with Rounded Corners -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/selected_item_bg"
+                android:backgroundTint="@color/secondPrimary"
+                android:padding="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewVideo">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent">
+
+                    <!-- Title: New Videos -->
+                    <TextView
+                        android:id="@+id/titleBook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="@string/collection_books"
+                        android:textColor="@android:color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/see_more_book"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:backgroundTint="@color/transparent"
+                        android:contentDescription="@string/image_content"
+                        android:src="@drawable/ic_navigate_next_50"
+                        app:layout_constraintBottom_toBottomOf="@id/titleBook"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/titleBook" />
 
                     <!-- RecyclerView for Video List -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewBook"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:itemCount="4"
-                        android:scrollbars="none"
                         android:layout_margin="12dp"
+                        android:layout_marginBottom="16dp"
                         android:background="@color/transparent"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/titleNewVideos" />
+                        app:layout_constraintTop_toBottomOf="@id/titleBook"
+                        tools:itemCount="4" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:paddingBottom="20dp"
+                android:text="@string/copyright_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardBook" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

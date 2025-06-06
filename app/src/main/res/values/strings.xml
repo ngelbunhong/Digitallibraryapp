@@ -27,6 +27,10 @@
 
     <string name="search_lbl">Search</string>
 
+    <string name="recent_announcements">Recent Announcements:</string>
+
     <string name="title_value"><b>Title :</b> %1s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

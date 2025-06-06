@@ -6,10 +6,15 @@ import java.io.Serializable
 data class Book(
     @SerializedName("id")
     val id: Int,
+    @SerializedName("title")
     val title: String,
+    @SerializedName("author")
     val author: String,
+    @SerializedName("thumbnail")
     val thumbnail: String,
-    val year: Int,
+    val year: Int, // Keep if you still need it for other purposes
     val isAvailable: Boolean,
-    val tags: List<String>
+    val tags: List<String>,
+    @SerializedName("createdAtTimestamp") // Or "publishedAt", "dateAdded"
+    val createdAtTimestamp: Long // Add this field
 ): Serializable

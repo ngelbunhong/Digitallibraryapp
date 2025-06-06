@@ -1,37 +1,42 @@
 [
   {
-    "id" : 1,
-    "title" : "5 ways to go home safety",
-    "author": "John",
-    "thumbnailUrl" : "",
-    "duration" : "2:00"
+    "id": 101,
+    "title": "Mastering StateFlow & SharedFlow",
+    "author": "Video Guru",
+    "thumbnailUrl": "https://example.com/vids/thumb101.jpg",
+    "duration": "12:35",
+    "createdAtTimestamp": 1717200000000
   },
   {
-    "id" : 2,
-    "title" : "5 ways to go home safety",
-    "author": "John",
-    "thumbnailUrl" : "",
-    "duration" : "2:00"
+    "id": 102,
+    "title": "Building Responsive Layouts in Compose",
+    "author": "UI Masterclass",
+    "thumbnailUrl": "https://example.com/vids/thumb102.jpg",
+    "duration": "08:50",
+    "createdAtTimestamp": 1704067200000
   },
   {
-    "id" : 3,
-    "title" : "5 ways to go home safety",
-    "author": "John",
-    "thumbnailUrl" : "",
-    "duration" : "2:00"
+    "id": 103,
+    "title": "Introduction to Ktor for Android",
+    "author": "Network Pro",
+    "thumbnailUrl": "https://example.com/vids/thumb103.jpg",
+    "duration": "15:00",
+    "createdAtTimestamp": 1712707200000
   },
   {
-    "id" : 4,
-    "title" : "5 ways to go home safety",
-    "author": "John",
-    "thumbnailUrl" : "",
-    "duration" : "2:00"
+    "id": 104,
+    "title": "Dependency Injection with Hilt",
+    "author": "Android Essentials",
+    "thumbnailUrl": "https://example.com/vids/thumb104.jpg",
+    "duration": "11:20",
+    "createdAtTimestamp": 1696118400000
   },
   {
-    "id" : 5,
-    "title" : "5 ways to go home safety",
-    "author": "John",
-    "thumbnailUrl" : "",
-    "duration" : "2:00"
+    "id": 105,
+    "title": "Testing Your Android ViewModel",
+    "author": "QA Champs",
+    "thumbnailUrl": "https://example.com/vids/thumb105.jpg",
+    "duration": "09:15",
+    "createdAtTimestamp": 1702166400000
   }
 ]

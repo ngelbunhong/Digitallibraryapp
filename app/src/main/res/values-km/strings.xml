@@ -4,7 +4,6 @@
     <string name="navigation_drawer_open">បើក</string>
     <string name="navigation_drawer_close">បិទ</string>
 
-
     <string name="nav_home">ផ្ទះ</string>
     <string name="nav_search">ស្វែងរក</string>
     <string name="nav_more">ច្រើនទៀត</string>
@@ -24,6 +23,11 @@
     <string name="example_text">ឧទាហរណ៍</string>
 
     <string name="watch_now">មើលឥឡូវនេះ</string>
+
+
+    <string name="search_lbl">ស្វែងរក</string>
+    <string name="recent_announcements">Rប្រកាស់ ថ្មីៗ :</string>
+
 
     <string name="title_value"><b>Title : </b>%1s</string>
 

@@ -4,9 +4,12 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.NavController
@@ -20,6 +23,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private var isRailVisible = false
+
+    // Defines the possible states of our Toolbar
+    sealed class ToolbarState {
+        // State for Home screen on a Tablet (logo + menu icon)
+        object HomeTablet : ToolbarState()
+        // State for Home screen on a Phone (logo only, no icon)
+        object HomePhone : ToolbarState()
+        // State for any Detail screen (back arrow + title, no logo)
+        data class DetailScreen(val title: String) : ToolbarState()
+    }
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,6 +127,7 @@ class MainActivity : AppCompatActivity() {
             // Reset fragment container constraints
             binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                endToEnd = ConstraintLayout.LayoutParams.PARENT_ID // Make sure end is also set to parent
             }
         }
     }
@@ -165,7 +179,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isTablet(): Boolean {
+    fun isTablet(): Boolean {
         // Check if device is a tablet (sw600dp or larger)
         return resources.configuration.smallestScreenWidthDp >= 600
     }
@@ -175,7 +189,42 @@ class MainActivity : AppCompatActivity() {
         return (dp * resources.displayMetrics.density).toInt()
     }
 
+
+    fun updateToolbar(state: ToolbarState) {
+        // Get references to views inside the toolbar
+        val toolbar = binding.toolbar.materialToolbar
+        val logo = toolbar.findViewById<ImageView>(R.id.image_logo)
+        val centeredTitle = toolbar.findViewById<TextView>(R.id.toolbar_title_centered)
+
+        when (state) {
+            is ToolbarState.HomePhone -> {
+                logo.visibility = View.VISIBLE
+                centeredTitle.visibility = View.GONE
+                supportActionBar?.setDisplayHomeAsUpEnabled(false) // No icon
+                toolbar.setNavigationOnClickListener(null) // Remove any click listener
+            }
+            is ToolbarState.HomeTablet -> {
+                logo.visibility = View.VISIBLE
+                centeredTitle.visibility = View.GONE
+                supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show an icon
+                toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_menu) // Set it to the menu icon
+                toolbar.setNavigationOnClickListener { toggleRail() } // Set click listener to toggle the rail
+            }
+            is ToolbarState.DetailScreen -> {
+                logo.visibility = View.GONE
+                centeredTitle.visibility = View.VISIBLE
+                centeredTitle.text = state.title
+                supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show the back arrow
+                // Use the default "up" navigation listener by setting our custom one to null
+                toolbar.setNavigationOnClickListener(null)
+                // The system will now automatically call onSupportNavigateUp() for the back arrow
+            }
+        }
+    }
+
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
 }
