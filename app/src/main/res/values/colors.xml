@@ -17,6 +17,9 @@
 
     <color name="blue">#007AFF</color>
 
+    <color name="status_available_green">#00FF19</color>
+    <color name="status_unavailable_red">#E70000</color>
+
 
 
 </resources>

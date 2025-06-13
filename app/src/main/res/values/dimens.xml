@@ -5,6 +5,7 @@
     <dimen name="card_corner_radius">12dp</dimen>
     <dimen name="ads_card_height">200dp</dimen>
     <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
 
 
     <dimen name="toolbar_logo_max_width">180dp</dimen>

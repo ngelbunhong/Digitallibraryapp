@@ -1,49 +1,54 @@
 package com.library.digitallibrary.ui.home.details
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
+import com.library.digitallibrary.data.local.dao.AppDatabase
 import com.library.digitallibrary.data.models.book.Book
 import com.library.digitallibrary.data.models.video.Video
 import com.library.digitallibrary.data.retrofit.RetrofitClient
-import kotlinx.coroutines.launch
 
 class DetailViewModel(application: Application) : AndroidViewModel(application) {
     private val apiService = RetrofitClient.create(application, useMock = true)
+    private val dao = AppDatabase.getDatabase(application).downloadedItemDao()
 
-    private val _bookDetails = MutableLiveData<Book?>()
-    val bookDetails: LiveData<Book?> = _bookDetails
+    // This is the private trigger that starts all data loading.
+    private val itemIdAndType = MutableLiveData<Pair<Int, String>>()
 
-    private val _videoDetails = MutableLiveData<Video?>()
-    val videoDetails: LiveData<Video?> = _videoDetails
-
-    // You would add similar LiveData for Video details
-    // private val _videoDetails = ...
-
-    fun loadBookDetails(bookId: Int) {
-        viewModelScope.launch {
-            try {
-                // For testing, we find the book from the full mock list.
-                // In a real app, this would be a specific API call: apiService.getBookById(bookId)
-                val book = apiService.mockBooks().find { it.id == bookId }
-                _bookDetails.postValue(book)
-            } catch (e: Exception) {
-                _bookDetails.postValue(null) // Post null on error
-            }
+    // This LiveData reactively fetches book details ONLY when the trigger is for a book.
+    val bookDetails: LiveData<Book?> = itemIdAndType.switchMap { (id, type) ->
+        if (type == "BOOK") {
+            // liveData builder automatically handles background threading
+            liveData { emit(apiService.mockBooks().find { it.id == id }) }
+        } else {
+            MutableLiveData(null) // Return null if it's not a book
         }
     }
 
-    fun loadVideoDetails(videoId: Int) {
-        viewModelScope.launch {
-            try {
-                val video = apiService.mockVideos().find { it.id == videoId }
-                _videoDetails.postValue(video)
-
-            } catch (e: Exception) {
-                _videoDetails.postValue(null)
-            }
+    // This LiveData reactively fetches video details ONLY when the trigger is for a video.
+    val videoDetails: LiveData<Video?> = itemIdAndType.switchMap { (id, type) ->
+        if (type == "VIDEO") {
+            liveData { emit(apiService.mockVideos().find { it.id == id }) }
+        } else {
+            MutableLiveData(null)
         }
+    }
+
+    // This LiveData reactively observes the download status for the current item from Room.
+    val downloadStatus: LiveData<String?> = itemIdAndType.switchMap { (id, type) ->
+        dao.getDownloadStatus(id, type)
+            .asLiveData()
+            .map { status ->
+                Log.d("DownloadStatus", "Observed new download status: $status for item ID: $id")
+                status // Pass the status along
+            }
+    }
+
+    /**
+     * The ONLY public function the Fragment needs to call to start loading everything.
+     */
+    fun loadItemDetails(id: Int, itemType: String) {
+        // Setting the value of this trigger will automatically update all the LiveData above.
+        itemIdAndType.value = id to itemType
     }
 }

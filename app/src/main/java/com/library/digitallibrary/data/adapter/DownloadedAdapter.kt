@@ -18,10 +18,10 @@ class DownloadedAdapter(
 ) : ListAdapter<DownloadedItem, DownloadedAdapter.DownloadedViewHolder>(DownloadedDiffCallback()) {
 
     inner class DownloadedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val thumbnail: ImageView = itemView.findViewById(R.id.item_image)
-        private val typeIcon: ImageView = itemView.findViewById(R.id.item_type_icon)
-        private val title: TextView = itemView.findViewById(R.id.item_title)
-        private val author: TextView = itemView.findViewById(R.id.item_author)
+        private val thumbnail: ImageView = itemView.findViewById(R.id.thumbnailUrl)
+        private val typeIcon: ImageView = itemView.findViewById(R.id.image_card_video)
+        private val title: TextView = itemView.findViewById(R.id.title_text)
+        private val author: TextView = itemView.findViewById(R.id.author_text)
 
         fun bind(item: DownloadedItem) {
             title.text = item.title

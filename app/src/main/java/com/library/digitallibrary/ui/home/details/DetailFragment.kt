@@ -1,12 +1,13 @@
 package com.library.digitallibrary.ui.home.details
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -21,16 +22,9 @@ class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: DetailViewModel
-
-    // Use Safe Args to get arguments
     private val args: DetailFragmentArgs by navArgs()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,108 +33,115 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
+        // Based on the navigation arguments, make ONE call to the ViewModel to start loading everything.
         if (args.bookId != -1) {
-            viewModel.loadBookDetails(args.bookId)
+            viewModel.loadItemDetails(args.bookId, "BOOK")
         } else if (args.videoId != -1) {
-            viewModel.loadVideoDetails(args.videoId)
+            viewModel.loadItemDetails(args.videoId, "VIDEO")
         }
 
         observeViewModel()
-
     }
 
     private fun observeViewModel() {
         viewModel.bookDetails.observe(viewLifecycleOwner) { book ->
             book?.let { bindBookData(it) }
         }
+
         viewModel.videoDetails.observe(viewLifecycleOwner) { video ->
-            video?.let {
-                bindVideoData(it)
-            }
+            video?.let { bindVideoData(it) }
+        }
+
+        viewModel.downloadStatus.observe(viewLifecycleOwner) { status ->
+            updateDownloadButtonState(status)
         }
     }
 
     private fun bindBookData(book: Book) {
-        // Set the aspect ratio for a book cover (e.g., a tall 2:3 ratio)
-        updateImageAspectRatio("2:3")
+        updateImageAspectRatio("2:3") // Set aspect ratio for a tall book cover
 
-        // Use the loaded book data to populate your views
+        // --- CORRECTED ---
         binding.detailTitle.text = book.title
-        binding.detailTitle.text = book.author
-        // First, check if the list of tags is not empty
+        binding.detailAuthor.text = book.author // Use the correct TextView for the author
+
+        // Use the 'detail_tag' TextView for tags
         if (book.tags.isNotEmpty()) {
-            // Use joinToString() to convert the list into a single string,
-            // separated by a comma and a space.
-            val tagsString = book.tags.joinToString(separator = ", ")
-
-            // Set the formatted string to the TextView, adding a prefix.
-            binding.detailTag.text = "Tags: $tagsString"
-
-            // Make the TextView visible
+            binding.detailTag.text = "Tags: ${book.tags.joinToString(", ")}"
             binding.detailTag.visibility = View.VISIBLE
         } else {
-            // If there are no tags, make sure the TextView is hidden
             binding.detailTag.visibility = View.GONE
         }
+
+        // --- IMPROVED ---
+        // Set text and color for availability status
         if (book.isAvailable) {
             binding.detailStatus.setText(R.string.status_available)
+            binding.detailStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_available_green))
         } else {
             binding.detailStatus.setText(R.string.status_not_available)
+            binding.detailStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_unavailable_red))
         }
 
-        Glide.with(this)
-            .load(book.thumbnail)
-            .into(binding.detailImage)
+        Glide.with(this).load(book.thumbnail).placeholder(R.drawable.placeholder_image).into(binding.detailImage)
 
-        // Set the click listener for the download button
-        binding.downloadButton.setOnClickListener {
-            // Call our Downloader helper class with the full book object
-            Downloader.startDownload(requireContext(), book)
-        }
+        binding.downloadButton.setOnClickListener { Downloader.startDownload(requireContext(), book) }
     }
 
     private fun bindVideoData(video: Video) {
-        // Set the aspect ratio for a video thumbnail (e.g., a wide 16:9 ratio)
-        updateImageAspectRatio("16:9")
+        updateImageAspectRatio("16:9") // Set aspect ratio for a wide video thumbnail
 
+        // --- COMPLETED ---
         binding.detailTitle.text = video.title
         binding.detailAuthor.text = video.author
-        // ... bind other video data ...
+        binding.detailStatus.visibility = View.GONE // Hide status view for videos (or set as needed)
+        binding.detailTag.text = "Duration: ${video.duration}" // Use tag view for duration
+        binding.detailTag.visibility = View.VISIBLE
 
-        Glide.with(this).load(video.thumbnailUrl).into(binding.detailImage)
-        // ... set download listener ...
+        Glide.with(this).load(video.thumbnailUrl).placeholder(R.drawable.placeholder_image).into(binding.detailImage)
+
+        // Set the download listener for videos
+        binding.downloadButton.setOnClickListener {
+            // You'll need a Downloader.startDownload(context, video) method similar to the book one
+            Toast.makeText(requireContext(), "Downloading video...", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    // This is the new helper function that changes the aspect ratio
     private fun updateImageAspectRatio(ratio: String) {
-        // Create a ConstraintSet to start modifying constraints
         val constraintSet = ConstraintSet()
-        // Clone the existing constraints from our layout
         constraintSet.clone(binding.detailConstraintLayout)
-
-        // Set the new dimension ratio string on our ImageView
         constraintSet.setDimensionRatio(binding.detailImage.id, ratio)
-
-        // Apply the new constraints back to our layout
         constraintSet.applyTo(binding.detailConstraintLayout)
     }
 
+    private fun updateDownloadButtonState(status: String?) {
+        when (status) {
+            "DOWNLOADING" -> {
+                binding.downloadButton.visibility = View.INVISIBLE
+                binding.downloadProgress.visibility = View.VISIBLE
+                binding.downloadCompleteIcon.visibility = View.GONE
+            }
+            "COMPLETE" -> {
+                binding.downloadButton.visibility = View.INVISIBLE
+                binding.downloadProgress.visibility = View.GONE
+                binding.downloadCompleteIcon.visibility = View.VISIBLE
+            }
+            else -> { // Not downloaded or failed
+                binding.downloadButton.visibility = View.VISIBLE
+                binding.downloadProgress.visibility = View.GONE
+                binding.downloadCompleteIcon.visibility = View.GONE
+            }
+        }
+    }
 
     override fun onResume() {
         super.onResume()
-        val title =
-            if (args.bookId != -1) "Book Details" else if (args.videoId != -1) "Video Details" else "Details"
-        Log.d(
-            "DetailFragment_DEBUG",
-            "onResume: Requesting toolbar update for DetailScreen."
-        ) // <-- ADD THIS LOG
+
+        val title = if (args.bookId != -1) "Book Details" else if (args.videoId != -1) "Video Details" else "Details"
         (activity as? MainActivity)?.updateToolbar(MainActivity.ToolbarState.DetailScreen(title))
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

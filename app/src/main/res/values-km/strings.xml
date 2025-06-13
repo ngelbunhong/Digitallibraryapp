@@ -31,6 +31,12 @@
 
     <string name="title_value"><b>Title : </b>%1s</string>
 
+    <string name="search_hint">Search books, videos, and more...</string>
+    <string name="search_prompt">Start typing to find content.</string>
+    <string name="search_prompt_length">Please enter at least 3 characters to search.</string>
+    <string name="no_results_found">No results found for your search.</string>
+
+    <string name="no_downloads_yet">No Data yet</string>
 
     <string name="status_available">ទាញយក</string>
     <string name="status_downloaded">បានទាញយក</string>

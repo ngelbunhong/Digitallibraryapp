@@ -52,30 +52,58 @@
                 android:layout_marginEnd="8dp"
                 android:textAppearance="?attr/textAppearanceHeadlineSmall"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/download_button"
+                app:layout_constraintEnd_toStartOf="@id/download_button_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detail_image"
                 tools:text="This is a Very Long Item Title to Show How It Wraps" />
 
-            <ImageButton
-                android:id="@+id/download_button"
+            <FrameLayout
+                android:id="@+id/download_button_container"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/status_downloaded"
-                android:src="@drawable/ic_download"
+                android:layout_marginEnd="@dimen/margin_8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/detail_title" />
+                app:layout_constraintTop_toTopOf="@id/detail_title">
+
+                <ImageButton
+                    android:id="@+id/download_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/status_downloaded"
+                    android:src="@drawable/ic_inbox" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/download_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/download_complete_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/status_downloaded"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_done_type"
+                    android:visibility="gone"
+                    app:tint="?attr/colorPrimary" />
+
+            </FrameLayout>
 
 
             <TextView
                 android:id="@+id/detail_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/download_button"
+                app:layout_constraintEnd_toEndOf="@+id/download_button_container"
+                app:layout_constraintStart_toStartOf="@+id/download_button_container"
+                app:layout_constraintTop_toBottomOf="@id/download_button_container"
                 tools:text="Available" />
 
             <TextView
