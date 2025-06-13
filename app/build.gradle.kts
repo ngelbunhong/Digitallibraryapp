@@ -19,6 +19,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags += ""
+            }
+        }
     }
 
     buildTypes {
@@ -40,6 +45,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
+        }
     }
 }
 
@@ -65,7 +76,7 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.7.1")
 
     //LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.1")
 
     // For loading book images
     implementation ("com.squareup.picasso:picasso:2.71828")
@@ -83,5 +94,9 @@ dependencies {
 
     //AndroidSVG
     implementation ("com.caverock:androidsvg-aar:1.4")
+
+
+    // Add this for Chrome Custom Tabs
+    implementation ("androidx.browser:browser:1.8.0")
 
 }

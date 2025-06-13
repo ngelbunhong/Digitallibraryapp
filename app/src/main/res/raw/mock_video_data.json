@@ -1,42 +1,82 @@
 [
   {
     "id": 101,
-    "title": "Mastering StateFlow & SharedFlow",
-    "author": "Video Guru",
-    "thumbnailUrl": "https://example.com/vids/thumb101.jpg",
-    "duration": "12:35",
-    "createdAtTimestamp": 1717200000000
+    "title": "What's New in Android 16",
+    "author": "Google I/O",
+    "thumbnailUrl": "https://picsum.photos/seed/video101/400/225",
+    "duration": "15:30",
+    "createdAtTimestamp": 1718002800000
   },
   {
     "id": 102,
-    "title": "Building Responsive Layouts in Compose",
-    "author": "UI Masterclass",
-    "thumbnailUrl": "https://example.com/vids/thumb102.jpg",
-    "duration": "08:50",
-    "createdAtTimestamp": 1704067200000
+    "title": "A Guide to Kotlin Multiplatform",
+    "author": "JetBrains",
+    "thumbnailUrl": "https://picsum.photos/seed/video102/400/225",
+    "duration": "22:15",
+    "createdAtTimestamp": 1715324400000
   },
   {
     "id": 103,
-    "title": "Introduction to Ktor for Android",
-    "author": "Network Pro",
-    "thumbnailUrl": "https://example.com/vids/thumb103.jpg",
-    "duration": "15:00",
-    "createdAtTimestamp": 1712707200000
+    "title": "Building Your First App with Compose",
+    "author": "Android Devs",
+    "thumbnailUrl": "https://picsum.photos/seed/video103/400/225",
+    "duration": "18:45",
+    "createdAtTimestamp": 1705302000000
   },
   {
     "id": 104,
-    "title": "Dependency Injection with Hilt",
-    "author": "Android Essentials",
-    "thumbnailUrl": "https://example.com/vids/thumb104.jpg",
-    "duration": "11:20",
-    "createdAtTimestamp": 1696118400000
+    "title": "Optimizing RecyclerView Performance",
+    "author": "Pro Coder",
+    "thumbnailUrl": "https://picsum.photos/seed/video104/400/225",
+    "duration": "11:05",
+    "createdAtTimestamp": 1698735600000
   },
   {
     "id": 105,
-    "title": "Testing Your Android ViewModel",
+    "title": "State Management in Compose",
+    "author": "Jane Designer",
+    "thumbnailUrl": "https://picsum.photos/seed/video105/400/225",
+    "duration": "13:40",
+    "createdAtTimestamp": 1712041200000
+  },
+  {
+    "id": 106,
+    "title": "Full-Stack Development with Ktor",
+    "author": "ServerSide Sam",
+    "thumbnailUrl": "https://picsum.photos/seed/video106/400/225",
+    "duration": "25:00",
+    "createdAtTimestamp": 1701327600000
+  },
+  {
+    "id": 107,
+    "title": "Intro to Dagger & Hilt",
+    "author": "Alex Mobiledev",
+    "thumbnailUrl": "https://picsum.photos/seed/video107/400/225",
+    "duration": "09:20",
+    "createdAtTimestamp": 1690354800000
+  },
+  {
+    "id": 108,
+    "title": "Animations in Jetpack Compose",
+    "author": "UI Masterclass",
+    "thumbnailUrl": "https://picsum.photos/seed/video108/400/225",
+    "duration": "14:55",
+    "createdAtTimestamp": 1710054000000
+  },
+  {
+    "id": 109,
+    "title": "Unit Testing Your ViewModel",
     "author": "QA Champs",
-    "thumbnailUrl": "https://example.com/vids/thumb105.jpg",
-    "duration": "09:15",
-    "createdAtTimestamp": 1702166400000
+    "thumbnailUrl": "https://picsum.photos/seed/video109/400/225",
+    "duration": "19:00",
+    "createdAtTimestamp": 1695279600000
+  },
+  {
+    "id": 110,
+    "title": "Using Room for Local Persistence",
+    "author": "Android Devs",
+    "thumbnailUrl": "https://picsum.photos/seed/video110/400/225",
+    "duration": "16:10",
+    "createdAtTimestamp": 1708066800000
   }
 ]

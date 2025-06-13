@@ -7,5 +7,6 @@ data class Ads(
     val imageUrl: String? = null, // For remote
     val imageResId: Int? = null,  // For local drawable
     val title: String? = null,
-    @StringRes val titleResId: Int? = null  // Store the string resource ID
+    @StringRes val titleResId: Int? = null,  // Store the string resource ID
+    val url: String? = null
 )

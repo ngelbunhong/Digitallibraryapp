@@ -12,6 +12,7 @@ data class Book(
     val author: String,
     @SerializedName("thumbnail")
     val thumbnail: String,
+    val downloadUrl: String? = null,
     val year: Int, // Keep if you still need it for other purposes
     val isAvailable: Boolean,
     val tags: List<String>,

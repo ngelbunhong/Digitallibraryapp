@@ -1,52 +1,112 @@
 [
   {
     "id": 1,
-    "title": "The Art of Kotlin",
-    "author": "Jane Coder",
-    "thumbnail": "https://example.com/thumbs/book1.jpg",
-    "year": 2024,
+    "title": "Modern Android with Kotlin",
+    "author": "Isabella Chen",
+    "thumbnail": "https://picsum.photos/seed/book1/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    "year": 2025,
     "isAvailable": true,
-    "tags": ["kotlin", "programming", "android"],
-    "createdAtTimestamp": 1715731200000
+    "tags": ["kotlin", "android", "jetpack"],
+    "createdAtTimestamp": 1717225200000
   },
   {
     "id": 2,
-    "title": "Advanced Android UI",
-    "author": "Alex Mobiledev",
-    "thumbnail": "https://example.com/thumbs/book2.jpg",
-    "year": 2023,
+    "title": "The Art of Concurrency",
+    "author": "Ben Threads",
+    "thumbnail": "https://picsum.photos/seed/book2/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    "year": 2024,
     "isAvailable": true,
-    "tags": ["android", "ui", "jetpack compose"],
-    "createdAtTimestamp": 1699142400000
+    "tags": ["coroutines", "kotlin", "performance"],
+    "createdAtTimestamp": 1706768000000
   },
   {
     "id": 3,
-    "title": "Coroutines Deep Dive",
-    "author": "Ben Concur",
-    "thumbnail": "https://example.com/thumbs/book3.jpg",
-    "year": 2024,
+    "title": "UI/UX Design Principles",
+    "author": "Alice Designer",
+    "thumbnail": "https://picsum.photos/seed/book3/400/600",
+    "downloadUrl": null,
+    "year": 2023,
     "isAvailable": false,
-    "tags": ["kotlin", "coroutines", "asynchronous"],
-    "createdAtTimestamp": 1709600000000
+    "tags": ["design", "ui", "ux"],
+    "createdAtTimestamp": 1688194800000
   },
   {
     "id": 4,
-    "title": "The Productive Programmer",
-    "author": "Sarah Efficiency",
-    "thumbnail": "https://example.com/thumbs/book4.jpg",
-    "year": 2023,
+    "title": "Server-Side Kotlin with Ktor",
+    "author": "David Backend",
+    "thumbnail": "https://picsum.photos/seed/book4/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    "year": 2024,
     "isAvailable": true,
-    "tags": ["productivity", "software", "development"],
-    "createdAtTimestamp": 1694736000000
+    "tags": ["kotlin", "ktor", "backend"],
+    "createdAtTimestamp": 1712732400000
   },
   {
     "id": 5,
-    "title": "Exploring Jetpack DataStore",
-    "author": "Chris Persist",
-    "thumbnail": "https://example.com/thumbs/book5.jpg",
+    "title": "Jetpack Compose In-Depth",
+    "author": "Isabella Chen",
+    "thumbnail": "https://picsum.photos/seed/book5/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     "year": 2024,
     "isAvailable": true,
-    "tags": ["android", "jetpack", "datastore", "persistence"],
-    "createdAtTimestamp": 1706745600000
+    "tags": ["compose", "android", "ui"],
+    "createdAtTimestamp": 1709622000000
+  },
+  {
+    "id": 6,
+    "title": "Clean Architecture on Android",
+    "author": "Martin Struct",
+    "thumbnail": "https://picsum.photos/seed/book6/400/600",
+    "downloadUrl": null,
+    "year": 2023,
+    "isAvailable": true,
+    "tags": ["architecture", "clean code", "android"],
+    "createdAtTimestamp": 1696143600000
+  },
+  {
+    "id": 7,
+    "title": "Advanced Git Techniques",
+    "author": "Gary Version",
+    "thumbnail": "https://picsum.photos/seed/book7/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    "year": 2023,
+    "isAvailable": true,
+    "tags": ["git", "vcs", "tools"],
+    "createdAtTimestamp": 1690873200000
+  },
+  {
+    "id": 8,
+    "title": "Introduction to Machine Learning",
+    "author": "Aida Intel",
+    "thumbnail": "https://picsum.photos/seed/book8/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    "year": 2024,
+    "isAvailable": false,
+    "tags": ["ml", "ai", "data science"],
+    "createdAtTimestamp": 1714892400000
+  },
+  {
+    "id": 9,
+    "title": "Database Design for Developers",
+    "author": "SQL Sam",
+    "thumbnail": "https://picsum.photos/seed/book9/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    "year": 2023,
+    "isAvailable": true,
+    "tags": ["database", "sql", "architecture"],
+    "createdAtTimestamp": 1693551600000
+  },
+  {
+    "id": 10,
+    "title": "The Security Handbook",
+    "author": "Sara Cipher",
+    "thumbnail": "https://picsum.photos/seed/book10/400/600",
+    "downloadUrl": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    "year": 2025,
+    "isAvailable": true,
+    "tags": ["security", "cybersecurity"],
+    "createdAtTimestamp": 1718089200000
   }
 ]
