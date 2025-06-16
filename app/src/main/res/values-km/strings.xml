@@ -31,15 +31,27 @@
 
     <string name="title_value"><b>Title : </b>%1s</string>
 
-    <string name="search_hint">Search books, videos, and more...</string>
+    <string name="search_hint">ស្វែងរកសៀវភៅ វីដេអូ និងច្រើនទៀត…</string>
     <string name="search_prompt">Start typing to find content.</string>
-    <string name="search_prompt_length">Please enter at least 3 characters to search.</string>
-    <string name="no_results_found">No results found for your search.</string>
+    <string name="search_prompt_length">សូមបញ្ចូលយ៉ាងហោចណាស់ 3 តួអក្សរដើម្បីស្វែងរក។</string>
+    <string name="no_results_found">រកមិនឃើញលទ្ធផលសម្រាប់ការស្វែងរករបស់អ្នកទេ។</string>
 
-    <string name="no_downloads_yet">No Data yet</string>
+    <string name="no_downloads_yet">មិនទាន់មានទិន្នន័យនៅឡើយ</string>
 
     <string name="status_available">ទាញយក</string>
     <string name="status_downloaded">បានទាញយក</string>
-    <string name="status_not_available">Not Available</string>
+    <string name="status_not_available">មិនអាចប្រើបាន</string>
+
+    <string name="about_us">អំពីពួកយើង</string>
+
+    <string name="about_us_describe">សូមស្វាគមន៍មកកាន់ បណ្ណាល័យអាទិភាព\n
+        បណ្ណាល័យនេះគឺជាកន្លែងចែករំលែកចំណេះដឹងដោយសេរីសម្រាប់អ្នកដែលស្រឡាញ់ការរៀនសូត្រ។\n
+        នៅទីនេះ អ្នកនឹងបានជួបនឹងសៀវភៅ [Videos នឹង PDF ] ដែលជ្រើសរើសដោយក្រុមការងារយើងខ្ញុំ។\n
+        សូមចូលរួមជាមួយយើងដើម្បីបង្កើតសហគមន៍អ្នកអានដ៏រីកចម្រើនមួយ។
+    </string>
+
+    <string name="develop_team">អភិវឌ្ឍន៍កម្មវីធីដោយ៖ </string>
+
+    <string name="sponsor_team">បង្កើតបណ្ណាល័យ [Digital Library]</string>
 
 </resources>

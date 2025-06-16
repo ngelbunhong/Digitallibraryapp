@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigationrail.NavigationRailView
 import com.library.digitallibrary.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +55,18 @@ class MainActivity : AppCompatActivity() {
         if (!isTablet()) {
             setupBottomNavigationForPhone()
         }
+
+        // --- THIS IS THE NEW LOGIC TO HIDE THE RAIL ---
+        // Add a listener that fires every time we navigate to a new screen.
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            // Check if the new screen is the DetailFragment
+            if (destination.id == R.id.detailFragment) {
+                // If the rail is currently visible, call toggleRail() to hide it.
+                if (isRailVisible) {
+                    toggleRail()
+                }
+            }
+        }
     }
 
     fun updateToolbar(state: ToolbarState) {
@@ -79,6 +92,7 @@ class MainActivity : AppCompatActivity() {
 
             is ToolbarState.DetailScreen -> {
                 logo.visibility = View.GONE
+//                railView.visibility = View.GONE
                 centeredTitle.visibility = View.VISIBLE
                 centeredTitle.text = state.title
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -126,10 +140,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupTabletRailNavigation() {
         val itemList = listOf(
-            R.drawable.ic_home to getString(R.string.nav_home),
-            R.drawable.ic_search to getString(R.string.nav_search),
-            R.drawable.ic_download to getString(R.string.nav_downloaded),
-            R.drawable.ic_more_horizontal to getString(R.string.nav_more)
+            R.drawable.ic_house_50 to getString(R.string.nav_home),
+            R.drawable.ic_surface_home to getString(R.string.nav_search),
+            R.drawable.ic_group_home to getString(R.string.nav_downloaded),
+            R.drawable.ic_more_home to getString(R.string.nav_more)
         )
         binding.navigationRail.setItems(itemList)
         binding.navigationRail.setOnItemSelectedListener { index ->

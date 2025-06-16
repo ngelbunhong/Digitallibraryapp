@@ -31,7 +31,7 @@
 
     <string name="title_value"><b>Title :</b> %1s</string>
 
-    <string name="search_hint">Search books, videos, and more...</string>
+    <string name="search_hint">Search books, videos, and more…</string>
     <string name="search_prompt">Start typing to find content.</string>
     <string name="search_prompt_length">Please enter at least 3 characters to search.</string>
     <string name="no_results_found">No results found for your search.</string>
@@ -41,6 +41,16 @@
     <string name="status_available">Available</string>
     <string name="status_downloaded">Downloaded</string>
     <string name="status_not_available">Not Available</string>
+    <string name="about_us">About us</string>
+
+    <string name="about_us_describe">Welcome to Priority Library\n
+        a place for free knowledge sharing for those who love learning.\n
+        Here you will find books [Videos and PDFs] selected by our team.\n
+        Join us to create a thriving community of readers.
+    </string>
+
+    <string name="develop_team">Program development by: </string>
+    <string name="sponsor_team">Create a library [Digital Library]</string>
 
 
 </resources>

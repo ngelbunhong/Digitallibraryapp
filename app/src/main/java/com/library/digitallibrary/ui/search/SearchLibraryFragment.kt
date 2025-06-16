@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.library.digitallibrary.MainActivity
 import com.library.digitallibrary.data.adapter.MixedContentAdapter
 import com.library.digitallibrary.data.models.book.Book
 import com.library.digitallibrary.data.models.video.Video
@@ -129,8 +130,7 @@ class SearchLibraryFragment : Fragment() {
         }
     }
 
-
-
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

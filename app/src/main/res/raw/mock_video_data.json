@@ -5,7 +5,8 @@
     "author": "Google I/O",
     "thumbnailUrl": "https://picsum.photos/seed/video101/400/225",
     "duration": "15:30",
-    "createdAtTimestamp": 1718002800000
+    "createdAtTimestamp": 1718002800000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
   },
   {
     "id": 102,
@@ -13,7 +14,8 @@
     "author": "JetBrains",
     "thumbnailUrl": "https://picsum.photos/seed/video102/400/225",
     "duration": "22:15",
-    "createdAtTimestamp": 1715324400000
+    "createdAtTimestamp": 1715324400000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
   },
   {
     "id": 103,
@@ -21,7 +23,8 @@
     "author": "Android Devs",
     "thumbnailUrl": "https://picsum.photos/seed/video103/400/225",
     "duration": "18:45",
-    "createdAtTimestamp": 1705302000000
+    "createdAtTimestamp": 1705302000000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
   },
   {
     "id": 104,
@@ -29,7 +32,8 @@
     "author": "Pro Coder",
     "thumbnailUrl": "https://picsum.photos/seed/video104/400/225",
     "duration": "11:05",
-    "createdAtTimestamp": 1698735600000
+    "createdAtTimestamp": 1698735600000,
+    "downloadUrl": null
   },
   {
     "id": 105,
@@ -37,7 +41,8 @@
     "author": "Jane Designer",
     "thumbnailUrl": "https://picsum.photos/seed/video105/400/225",
     "duration": "13:40",
-    "createdAtTimestamp": 1712041200000
+    "createdAtTimestamp": 1712041200000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
   },
   {
     "id": 106,
@@ -45,7 +50,8 @@
     "author": "ServerSide Sam",
     "thumbnailUrl": "https://picsum.photos/seed/video106/400/225",
     "duration": "25:00",
-    "createdAtTimestamp": 1701327600000
+    "createdAtTimestamp": 1701327600000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
   },
   {
     "id": 107,
@@ -53,7 +59,8 @@
     "author": "Alex Mobiledev",
     "thumbnailUrl": "https://picsum.photos/seed/video107/400/225",
     "duration": "09:20",
-    "createdAtTimestamp": 1690354800000
+    "createdAtTimestamp": 1690354800000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
   },
   {
     "id": 108,
@@ -61,7 +68,8 @@
     "author": "UI Masterclass",
     "thumbnailUrl": "https://picsum.photos/seed/video108/400/225",
     "duration": "14:55",
-    "createdAtTimestamp": 1710054000000
+    "createdAtTimestamp": 1710054000000,
+    "downloadUrl": null
   },
   {
     "id": 109,
@@ -69,7 +77,8 @@
     "author": "QA Champs",
     "thumbnailUrl": "https://picsum.photos/seed/video109/400/225",
     "duration": "19:00",
-    "createdAtTimestamp": 1695279600000
+    "createdAtTimestamp": 1695279600000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
   },
   {
     "id": 110,
@@ -77,6 +86,7 @@
     "author": "Android Devs",
     "thumbnailUrl": "https://picsum.photos/seed/video110/400/225",
     "duration": "16:10",
-    "createdAtTimestamp": 1708066800000
+    "createdAtTimestamp": 1708066800000,
+    "downloadUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
   }
 ]

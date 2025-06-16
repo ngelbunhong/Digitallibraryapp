@@ -24,7 +24,11 @@ class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
     private val args: DetailFragmentArgs by navArgs()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -76,15 +80,31 @@ class DetailFragment : Fragment() {
         // Set text and color for availability status
         if (book.isAvailable) {
             binding.detailStatus.setText(R.string.status_available)
-            binding.detailStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_available_green))
+            binding.detailStatus.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.status_available_green
+                )
+            )
         } else {
             binding.detailStatus.setText(R.string.status_not_available)
-            binding.detailStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_unavailable_red))
+            binding.detailStatus.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.status_unavailable_red
+                )
+            )
         }
 
-        Glide.with(this).load(book.thumbnail).placeholder(R.drawable.placeholder_image).into(binding.detailImage)
+        Glide.with(this).load(book.thumbnail).placeholder(R.drawable.placeholder_image)
+            .into(binding.detailImage)
 
-        binding.downloadButton.setOnClickListener { Downloader.startDownload(requireContext(), book) }
+        binding.downloadButton.setOnClickListener {
+            Downloader.startDownload(
+                requireContext(),
+                book
+            )
+        }
     }
 
     private fun bindVideoData(video: Video) {
@@ -93,16 +113,17 @@ class DetailFragment : Fragment() {
         // --- COMPLETED ---
         binding.detailTitle.text = video.title
         binding.detailAuthor.text = video.author
-        binding.detailStatus.visibility = View.GONE // Hide status view for videos (or set as needed)
+        binding.detailStatus.visibility =
+            View.GONE // Hide status view for videos (or set as needed)
         binding.detailTag.text = "Duration: ${video.duration}" // Use tag view for duration
         binding.detailTag.visibility = View.VISIBLE
 
-        Glide.with(this).load(video.thumbnailUrl).placeholder(R.drawable.placeholder_image).into(binding.detailImage)
+        Glide.with(this).load(video.thumbnailUrl).placeholder(R.drawable.placeholder_image)
+            .into(binding.detailImage)
 
         // Set the download listener for videos
         binding.downloadButton.setOnClickListener {
-            // You'll need a Downloader.startDownload(context, video) method similar to the book one
-            Toast.makeText(requireContext(), "Downloading video...", Toast.LENGTH_SHORT).show()
+            Downloader.startDownload(requireContext(), video)
         }
     }
 
@@ -120,11 +141,13 @@ class DetailFragment : Fragment() {
                 binding.downloadProgress.visibility = View.VISIBLE
                 binding.downloadCompleteIcon.visibility = View.GONE
             }
+
             "COMPLETE" -> {
                 binding.downloadButton.visibility = View.INVISIBLE
                 binding.downloadProgress.visibility = View.GONE
                 binding.downloadCompleteIcon.visibility = View.VISIBLE
             }
+
             else -> { // Not downloaded or failed
                 binding.downloadButton.visibility = View.VISIBLE
                 binding.downloadProgress.visibility = View.GONE
@@ -136,7 +159,8 @@ class DetailFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val title = if (args.bookId != -1) "Book Details" else if (args.videoId != -1) "Video Details" else "Details"
+        val title =
+            if (args.bookId != -1) "Book Details" else if (args.videoId != -1) "Video Details" else "Details"
         (activity as? MainActivity)?.updateToolbar(MainActivity.ToolbarState.DetailScreen(title))
     }
 

@@ -30,7 +30,7 @@
             android:id="@+id/detail_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/detail_image"
@@ -61,7 +61,7 @@
                 android:id="@+id/download_button_container"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginEnd="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/detail_title">
 
@@ -86,10 +86,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/status_downloaded"
-                    android:padding="8dp"
                     android:src="@drawable/ic_done_type"
-                    android:visibility="gone"
-                    app:tint="?attr/colorPrimary" />
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:visibility="gone" />
 
             </FrameLayout>
 
@@ -98,7 +97,7 @@
                 android:id="@+id/detail_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/download_button_container"

@@ -1,5 +1,7 @@
 package com.library.digitallibrary.ui.offline
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +11,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -46,14 +50,13 @@ class OfflineLibraryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[OfflineViewModel::class.java]
 
-        downloadedAdapter = DownloadedAdapter { item ->
-            Toast.makeText(requireContext(), "Opening ${item.title}", Toast.LENGTH_SHORT).show()
-            // Your file opening logic
-        }
 
         setupRecyclerView()
         setupSearch()
         observeViewModel()
+
+        // Call the new setup function for hiding the keyboard
+        setupHideKeyboardOnTap(view)
     }
 
     private fun setupRecyclerView() {
@@ -164,6 +167,38 @@ class OfflineLibraryFragment : Fragment() {
     private fun getMimeType(file: File): String? {
         val extension = file.extension
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+    }
+
+    // --- NEW FUNCTION TO HIDE KEYBOARD ON TAP ---
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupHideKeyboardOnTap(view: View) {
+        // Set up a listener on the parent layout.
+        // If the view is not an EditText, set a touch listener to hide the keyboard.
+        if (view !is EditText) {
+            view.setOnTouchListener { _, _ ->
+                hideSoftKeyboard()
+                false // Return false so the touch event is not consumed and can be passed to other views.
+            }
+        }
+
+        // If the view is a container, recursively apply the listener to its children.
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                setupHideKeyboardOnTap(innerView)
+            }
+        }
+    }
+
+    // --- NEW HELPER FUNCTION TO HIDE THE KEYBOARD ---
+    private fun hideSoftKeyboard() {
+        activity?.let { act ->
+            val inputMethodManager = act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            act.currentFocus?.let { focusedView ->
+                inputMethodManager.hideSoftInputFromWindow(focusedView.windowToken, 0)
+                focusedView.clearFocus() // Optional: clear focus from the EditText
+            }
+        }
     }
 
 

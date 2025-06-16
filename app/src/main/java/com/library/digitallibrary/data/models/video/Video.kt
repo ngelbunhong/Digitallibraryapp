@@ -15,5 +15,9 @@ data class Video(
     @SerializedName("duration")
     val duration: String,
     @SerializedName("createdAtTimestamp") // Or "publishedAt", "dateAdded"
-    val createdAtTimestamp: Long // Add this field
+    val createdAtTimestamp: Long, // Add this field
+
+    // Add this field to hold the URL for the downloadable video file
+    @SerializedName("downloadUrl")
+    val downloadUrl: String? = null
 ): Serializable
