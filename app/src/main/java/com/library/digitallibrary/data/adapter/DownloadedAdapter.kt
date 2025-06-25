@@ -32,7 +32,7 @@ class DownloadedAdapter(
                 .load(item.thumbnailUrl?.ifEmpty { R.drawable.placeholder_image })
                 .placeholder(R.drawable.placeholder_image)
                 .into(thumbnail)
-            typeIcon.setImageResource(if (item.itemType == "BOOK") R.drawable.id_pdf_form else R.drawable.ic_card_video)
+            typeIcon.setImageResource(if (item.itemType == "BOOK") R.drawable.id_pdf_form else R.drawable.ic_video)
             itemView.setOnClickListener { listener(item) }
         }
     }

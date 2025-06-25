@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:padding="24dp"
+    android:fontFamily="@font/inter_font"
     android:text="@string/copyright_text"
     android:textColor="?android:attr/textColorSecondary"
     android:textSize="12sp" />

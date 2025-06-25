@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
+        android:fontFamily="@font/inter_font"
         android:layout_marginEnd="12dp"
         android:text="@string/search_lbl"
         android:textSize="30sp"
@@ -82,10 +83,23 @@
         android:textAppearance="?attr/textAppearanceBodyLarge"
         android:textColor="?android:attr/textColorSecondary"
         android:visibility="gone"
+        android:fontFamily="@font/inter_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_input_layout"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/copyright_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/copyright_text"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

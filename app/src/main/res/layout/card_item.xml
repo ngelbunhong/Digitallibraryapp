@@ -25,13 +25,14 @@
             android:contentDescription="@string/image_content"
             android:padding="8dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/card_video" />
+            android:src="@drawable/ic_group_click" />
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_font"
         android:layout_marginTop="6dp"
         android:text="@string/example_text"
         android:textColor="@android:color/black"

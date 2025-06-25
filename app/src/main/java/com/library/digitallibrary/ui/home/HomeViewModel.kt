@@ -64,12 +64,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 val cardItems = listOf(
                     Ads(
                         id = 1,
-                        imageResId = R.drawable.card_video,
+                        imageResId = R.drawable.ic_group_click,
                         titleResId = R.string.collection_videos
                     ),
                     Ads(
                         id = 2,
-                        imageResId = R.drawable.card_book,
+                        imageResId = R.drawable.ic_text_books,
                         titleResId = R.string.collection_books
                     )
                 )

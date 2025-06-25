@@ -97,9 +97,9 @@
         android:id="@+id/image_card_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/id_pdf_form"
         android:layout_marginStart="-50dp"
         android:contentDescription="@string/image_content"
-        android:src="@drawable/ic_card_video"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

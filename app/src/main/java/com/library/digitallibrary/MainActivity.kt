@@ -92,9 +92,9 @@ class MainActivity : AppCompatActivity() {
 
             is ToolbarState.DetailScreen -> {
                 logo.visibility = View.GONE
-//                railView.visibility = View.GONE
                 centeredTitle.visibility = View.VISIBLE
                 centeredTitle.text = state.title
+                binding.bottomNav.visibility = View.GONE
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back)
                 toolbar.setNavigationOnClickListener { onSupportNavigateUp() }
@@ -114,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         binding.navigationRail.visibility = View.GONE
         binding.bottomNav.visibility = View.VISIBLE
         binding.bottomNav.setupWithNavController(navController)
+        binding.bottomNav.itemIconTintList = null
         binding.navHostFragment.updateLayoutParams<ConstraintLayout.LayoutParams> {
             startToStart = ConstraintLayout.LayoutParams.PARENT_ID
             endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
