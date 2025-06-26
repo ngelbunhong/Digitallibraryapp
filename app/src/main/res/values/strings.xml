@@ -51,6 +51,8 @@
 
     <string name="develop_team">Program development by: </string>
     <string name="sponsor_team">Create a library [Digital Library]</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

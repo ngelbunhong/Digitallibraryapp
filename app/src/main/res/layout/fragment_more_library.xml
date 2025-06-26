@@ -18,105 +18,100 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-<!--    <ScrollView-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/copyright_text"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical"-->
-<!--            android:padding="@dimen/margin_16">-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--            <TextView-->
-<!--                android:id="@+id/about_us"-->
-<!--                style="@style/TextAppearance.Material3.HeadlineLarge"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/about_us"-->
-<!--                android:textStyle="bold" />-->
+        <TextView
+            android:id="@+id/about_us"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_us"
+            android:textStyle="bold" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/see_more_description"-->
-<!--                style="@style/TextAppearance.Material3.BodyLarge"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="@font/inter_font"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:lineSpacingExtra="4dp"-->
-<!--                android:text="@string/about_us_describe"-->
-<!--                android:textColor="?android:attr/textColorSecondary" />-->
+        <TextView
+            android:id="@+id/see_more_description"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/inter_font"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/about_us_describe"
+            android:textColor="?android:attr/textColorSecondary" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/developer_team"-->
-<!--                style="@style/TextAppearance.Material3.TitleMedium"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="@font/inter_font"-->
-<!--                android:layout_marginTop="24dp"-->
-<!--                android:text="@string/develop_team"-->
-<!--                android:textStyle="bold" />-->
+        <TextView
+            android:id="@+id/developer_team"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/inter_font"
+            android:text="@string/develop_team"
+            android:textStyle="bold" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="24dp"-->
-<!--                    android:layout_height="24dp"-->
-<!--                    android:contentDescription="@string/image_content"-->
-<!--                    android:layout_marginEnd="16dp"-->
-<!--                    android:src="@drawable/circle_selector"-->
-<!--                    app:tint="?attr/colorPrimary" />-->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/image_content"
+                android:src="@drawable/circle_selector"
+                app:tint="?attr/colorPrimary" />
 
-<!--                <TextView-->
-<!--                    style="@style/TextAppearance.Material3.BodyLarge"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text=".... ....... (Project Lead)" />-->
-<!--            </LinearLayout>-->
+            <TextView
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".... ....... (Project Lead)" />
+        </LinearLayout>
 
-<!--            <TextView-->
-<!--                android:id="@+id/sponsor_team"-->
-<!--                style="@style/TextAppearance.Material3.TitleMedium"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="24dp"-->
-<!--                android:fontFamily="@font/inter_font"-->
-<!--                android:text="@string/sponsor_team"-->
-<!--                android:textStyle="bold" />-->
+        <TextView
+            android:id="@+id/sponsor_team"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/inter_font"
+            android:text="@string/sponsor_team"
+            android:textStyle="bold" />
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="24dp"-->
-<!--                    android:layout_height="24dp"-->
-<!--                    android:contentDescription="@string/image_content"-->
-<!--                    android:layout_marginEnd="16dp"-->
-<!--                    android:src="@drawable/circle_selector"-->
-<!--                    app:tint="?attr/colorPrimary" />-->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/image_content"
+                android:src="@drawable/circle_selector"
+                app:tint="?attr/colorPrimary" />
 
-<!--                <TextView-->
-<!--                    style="@style/TextAppearance.Material3.BodyLarge"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text=".... ....... (Project Lead)" />-->
-<!--            </LinearLayout>-->
+            <TextView
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".... ....... (Project Lead)" />
+        </LinearLayout>
 
-<!--        </LinearLayout>-->
+    </LinearLayout>
 
-<!--    </ScrollView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

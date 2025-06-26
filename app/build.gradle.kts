@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     id("com.google.devtools.ksp")
     id ("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
@@ -36,6 +37,7 @@ android {
         }
     }
     buildFeatures {
+        compose = true
         viewBinding = true
     }
 
@@ -66,6 +68,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Core Compose dependencies
+    implementation(platform("androidx.compose:compose-bom:2025.06.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation("io.coil-kt:coil-compose:2.6.0") // Use the latest version
 
     //Room
     implementation("androidx.room:room-runtime:2.7.1")

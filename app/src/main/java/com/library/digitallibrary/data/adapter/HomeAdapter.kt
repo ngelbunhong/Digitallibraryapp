@@ -26,22 +26,20 @@ import com.library.digitallibrary.data.models.video.Video
 private const val TYPE_ADS = 1
 private const val TYPE_CARDS = 2
 private const val TYPE_TITLED_SECTION = 3
-private const val TYPE_COPYRIGHT = 4 // Or any other unique number
-// Add more types if you expand later
+private const val TYPE_COPYRIGHT = 4
 
 class HomeAdapter(private val listener: HomeAdapterListener) :
     ListAdapter<HomeScreenItem, RecyclerView.ViewHolder>(HomeScreenItemDiffCallback()) {
 
-    // Add onBookItemClicked and onVideoItemClicked to the interface
     interface HomeAdapterListener {
         fun onSeeMoreClicked(sectionTitle: String)
         fun onBookItemClicked(book: Book)
         fun onVideoItemClicked(video: Video)
         fun onAdClicked(ad: Ads)
-        fun onCardItemClicked(cardItem: Ads) // Card items also use the Ads model
+        fun onCardItemClicked(cardItem: Ads)
     }
 
-    private val viewPool = RecyclerView.RecycledViewPool()
+    // --- FIX: The shared RecycledViewPool has been removed to prevent ClassCastExceptions. ---
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -50,7 +48,6 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
             is HomeScreenItem.TitledBookSection,
             is HomeScreenItem.TitledVideoSection,
             is HomeScreenItem.TitledMixedSection -> TYPE_TITLED_SECTION
-
             is HomeScreenItem.Copyright -> TYPE_COPYRIGHT
         }
     }
@@ -62,63 +59,34 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
                 inflater.inflate(R.layout.item_home_viewpager, parent, false),
                 listener
             )
-
             TYPE_CARDS -> NestedRecyclerViewHolder(
-                inflater.inflate(
-                    R.layout.item_home_nested_recycler,
-                    parent,
-                    false
-                ), viewPool, listener
+                inflater.inflate(R.layout.item_home_nested_recycler, parent, false),
+                listener // Pass listener only
             )
-
             TYPE_TITLED_SECTION -> TitledSectionViewHolder(
-                inflater.inflate(
-                    R.layout.item_home_card_section,
-                    parent,
-                    false
-                ), viewPool, listener
+                inflater.inflate(R.layout.item_home_card_section, parent, false),
+                listener // Pass listener only
             )
-
             TYPE_COPYRIGHT -> CopyrightViewHolder(
-                inflater.inflate(
-                    R.layout.item_copyright,
-                    parent,
-                    false
-                )
-            ) // Add this case
-
-            else -> throw IllegalArgumentException("Unknown view type")
+                inflater.inflate(R.layout.item_copyright, parent, false)
+            )
+            else -> throw IllegalArgumentException("Unknown view type: $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is HomeScreenItem.AdsSection -> (holder as AdsViewHolder).bind(item)
-            is HomeScreenItem.CardItemSection -> (holder as NestedRecyclerViewHolder).bindCardItems(
-                item
-            )
-
-            is HomeScreenItem.TitledBookSection -> (holder as TitledSectionViewHolder).bindBooks(
-                item
-            )
-
-            is HomeScreenItem.TitledVideoSection -> (holder as TitledSectionViewHolder).bindVideos(
-                item
-            )
-
-            is HomeScreenItem.TitledMixedSection -> (holder as TitledSectionViewHolder).bindMixedGrid(
-                item
-            )
-
-            is HomeScreenItem.Copyright -> { /* No data to bind for this simple view */
-            }
+            is HomeScreenItem.CardItemSection -> (holder as NestedRecyclerViewHolder).bindCardItems(item)
+            is HomeScreenItem.TitledBookSection -> (holder as TitledSectionViewHolder).bindBooks(item)
+            is HomeScreenItem.TitledVideoSection -> (holder as TitledSectionViewHolder).bindVideos(item)
+            is HomeScreenItem.TitledMixedSection -> (holder as TitledSectionViewHolder).bindMixedGrid(item)
+            is HomeScreenItem.Copyright -> { /* No data to bind */ }
         }
     }
 
-    // This single ViewHolder now handles all three of your list/grid sections
     class TitledSectionViewHolder(
         view: View,
-        private val viewPool: RecyclerView.RecycledViewPool,
         private val listener: HomeAdapterListener
     ) : RecyclerView.ViewHolder(view) {
         private val sectionTitle: TextView = view.findViewById(R.id.section_title)
@@ -130,34 +98,26 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
             sectionTitle.text = titleText
             seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(titleText) }
 
-            // Create the inner BookAdapter, passing the click event up to the main listener
-            val bookAdapter = BookAdapter { book ->
-                listener.onBookItemClicked(book)
-            }
-
+            val bookAdapter = BookAdapter { book -> listener.onBookItemClicked(book) }
             innerRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = bookAdapter
-                setRecycledViewPool(viewPool)
+                // --- FIX: The setRecycledViewPool call is removed. ---
             }
             bookAdapter.submitList(item.books)
         }
 
         fun bindVideos(item: HomeScreenItem.TitledVideoSection) {
             val titleText = itemView.context.getString(item.titleResId)
-
             sectionTitle.text = titleText
             seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(titleText) }
 
-            val videoAdapter = VideoAdapter { video ->
-                listener.onVideoItemClicked(video)
-            }
-            val spanCount =
-                if ((itemView.context.resources.configuration.smallestScreenWidthDp >= 600)) 2 else 2
+            val videoAdapter = VideoAdapter { video -> listener.onVideoItemClicked(video) }
+            val spanCount = if ((itemView.context.resources.configuration.smallestScreenWidthDp >= 600)) 2 else 2
             innerRecyclerView.apply {
                 layoutManager = GridLayoutManager(context, spanCount)
                 adapter = videoAdapter
-                setRecycledViewPool(viewPool)
+                // --- FIX: The setRecycledViewPool call is removed. ---
             }
             videoAdapter.submitList(item.videos)
         }
@@ -168,18 +128,13 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
             seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(titleText) }
 
             val mixedAdapter = MixedContentAdapter(object : MixedContentAdapter.ItemClickListener {
-                override fun onBookClicked(book: Book) {
-                    listener.onBookItemClicked(book)
-                }
-
-                override fun onVideoClicked(video: Video) {
-                    listener.onVideoItemClicked(video)
-                }
+                override fun onBookClicked(book: Book) { listener.onBookItemClicked(book) }
+                override fun onVideoClicked(video: Video) { listener.onVideoItemClicked(video) }
             })
             innerRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = mixedAdapter
-                setRecycledViewPool(viewPool)
+                // --- FIX: The setRecycledViewPool call is removed. ---
             }
             mixedAdapter.submitList(item.items)
         }
@@ -187,13 +142,10 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
 }
 
 
-// --- ViewHolder for Ads with Indicators and Auto-Scroll ---
 class AdsViewHolder(view: View, listener: HomeAdapterListener) : RecyclerView.ViewHolder(view) {
     private val viewPager: ViewPager2 = view.findViewById(R.id.viewPagerAds)
     private val indicatorLayout: LinearLayout = view.findViewById(R.id.indicatorLayout)
-
     private val adsAdapter = AdsAdapter { ad -> listener.onAdClicked(ad) }
-
     private val autoScrollHelper = Handler(Looper.getMainLooper())
     private var currentPage = 0
     private var scrollerRunnable: Runnable
@@ -216,19 +168,16 @@ class AdsViewHolder(view: View, listener: HomeAdapterListener) : RecyclerView.Vi
         })
 
         itemView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-            override fun onViewAttachedToWindow(v: View) {
-                autoScrollHelper.postDelayed(scrollerRunnable, 5000)
-            }
-
-            override fun onViewDetachedFromWindow(v: View) {
-                autoScrollHelper.removeCallbacks(scrollerRunnable)
-            }
+            override fun onViewAttachedToWindow(v: View) { autoScrollHelper.postDelayed(scrollerRunnable, 5000) }
+            override fun onViewDetachedFromWindow(v: View) { autoScrollHelper.removeCallbacks(scrollerRunnable) }
         })
     }
 
     fun bind(item: HomeScreenItem.AdsSection) {
         adsAdapter.submitList(item.ads)
         createIndicators(item.ads.size)
+        autoScrollHelper.removeCallbacks(scrollerRunnable)
+        autoScrollHelper.postDelayed(scrollerRunnable, 5000)
     }
 
     private fun createIndicators(count: Int) {
@@ -237,8 +186,7 @@ class AdsViewHolder(view: View, listener: HomeAdapterListener) : RecyclerView.Vi
         for (i in 0 until count) {
             indicatorLayout.addView(ImageView(itemView.context).apply {
                 setImageResource(R.drawable.circle_selector)
-                layoutParams =
-                    LinearLayout.LayoutParams(24, 24).apply { marginStart = 8; marginEnd = 8 }
+                layoutParams = LinearLayout.LayoutParams(24, 24).apply { marginStart = 8; marginEnd = 8 }
             })
         }
         updateIndicators(viewPager.currentItem)
@@ -252,10 +200,8 @@ class AdsViewHolder(view: View, listener: HomeAdapterListener) : RecyclerView.Vi
 }
 
 
-// --- ViewHolder for un_title, horizontal lists like Card Items ---
 class NestedRecyclerViewHolder(
     view: View,
-    private val viewPool: RecyclerView.RecycledViewPool,
     private val listener: HomeAdapterListener
 ) : RecyclerView.ViewHolder(view) {
     private val recyclerView: RecyclerView = view.findViewById(R.id.inner_recycler_view)
@@ -264,7 +210,7 @@ class NestedRecyclerViewHolder(
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = cardAdapter
-            setRecycledViewPool(viewPool)
+            // --- FIX: The setRecycledViewPool call is removed. ---
         }
         cardAdapter.submitList(item.cards)
     }
@@ -272,10 +218,7 @@ class NestedRecyclerViewHolder(
 
 class CopyrightViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-// Your HomeScreenItemDiffCallback class remains the same
 class HomeScreenItemDiffCallback : DiffUtil.ItemCallback<HomeScreenItem>() {
-    override fun areItemsTheSame(old: HomeScreenItem, new: HomeScreenItem): Boolean =
-        old.id == new.id
-
+    override fun areItemsTheSame(old: HomeScreenItem, new: HomeScreenItem): Boolean = old.id == new.id
     override fun areContentsTheSame(old: HomeScreenItem, new: HomeScreenItem): Boolean = old == new
 }

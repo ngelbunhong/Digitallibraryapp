@@ -22,6 +22,18 @@ import com.library.digitallibrary.data.models.video.Video
 import com.library.digitallibrary.databinding.FragmentHomeLibraryBinding
 import androidx.core.net.toUri
 
+/**
+ * The main screen of the application, displaying a dynamic list of content sections.
+ *
+ * This fragment is responsible for:
+ * - Hosting the main RecyclerView that displays various sections like ads, books, and videos.
+ * - Initializing and connecting the [HomeViewModel] to observe home screen data.
+ * - Setting up the [HomeAdapter] and handling all user interactions from it, such as clicks
+ * on books, videos, ads, or "see more" buttons.
+ * - Navigating to other parts of the app, like the detail screen, using the Jetpack Navigation component.
+ * - Launching URLs in a Chrome Custom Tab for a seamless web browsing experience.
+ * - Updating the main activity's toolbar based on the device type (phone vs. tablet).
+ */
 class HomeLibraryFragment : Fragment() {
     private var _binding: FragmentHomeLibraryBinding? = null
     private val binding get() = _binding!!
@@ -41,102 +53,116 @@ class HomeLibraryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
-        // Create the adapter with the full listener implementation
+        // Create the adapter, providing an implementation for the listener interface
+        // to handle all click events delegated from the adapter's view holders.
         val homeAdapter = HomeAdapter(object : HomeAdapter.HomeAdapterListener {
             override fun onSeeMoreClicked(sectionTitle: String) {
+                // TODO: Implement navigation to a full list screen for the given section.
                 Toast.makeText(requireContext(), "See More for $sectionTitle", Toast.LENGTH_SHORT)
                     .show()
             }
 
             override fun onBookItemClicked(book: Book) {
-                // Navigate to detail screen, passing the book's ID
                 navigateToBookDetails(book.id)
             }
 
             override fun onVideoItemClicked(video: Video) {
-                // Navigate to detail screen, passing the video's ID
                 navigateToVideoDetails(video.id)
             }
 
             override fun onAdClicked(ad: Ads) {
-                // 1. Get the URL from the ad object.
-                val url = ad.url
-                if (url.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "No link available for this ad.", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
-                try {
-                    // --- THE NEW AND CORRECT WAY ---
-
-                    // 1. Define the color scheme for the Custom Tab.
-                    val colorSchemeParams = CustomTabColorSchemeParams.Builder()
-                        .setToolbarColor(ContextCompat.getColor(requireContext(), R.color.primary))
-                        .build()
-
-                    // 2. Build the Custom Tabs Intent and apply the new color scheme.
-                    val customTabsIntent = CustomTabsIntent.Builder()
-                        .setDefaultColorSchemeParams(colorSchemeParams)
-                        .setShowTitle(true)
-                        .build()
-
-                    // 3. Launch the URL.
-                    customTabsIntent.launchUrl(requireContext(), url.toUri())
-
-                } catch (e: ActivityNotFoundException) {
-                    Toast.makeText(requireContext(), "No web browser found to open the link.", Toast.LENGTH_LONG).show()
-                }
+                openUrlInCustomTab(ad.url)
             }
 
             override fun onCardItemClicked(cardItem: Ads) {
-                // Here you can check the ID of the card to navigate
-                when (cardItem.titleResId) { // Using titleResId as a unique identifier for these cards
+                // TODO: Implement navigation for card items.
+                // This is a placeholder for future navigation logic based on which card is tapped.
+                when (cardItem.titleResId) {
                     R.string.collection_videos -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "Navigating to Videos Section...",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        // findNavController().navigate(R.id.action_to_video_category)
+                        findNavController().navigate(R.id.action_home_to_video)
                     }
 
                     R.string.collection_books -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "Navigating to Books Section...",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        // findNavController().navigate(R.id.action_to_book_category)
+                        findNavController().navigate(R.id.action_home_to_book)
                     }
                 }
             }
         })
 
+        // Setup the RecyclerView
         binding.mainRecyclerView.adapter = homeAdapter
         binding.mainRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        // Observe the list of home screen items from the ViewModel and submit it to the adapter.
         viewModel.screenItems.observe(viewLifecycleOwner) { items ->
             homeAdapter.submitList(items)
         }
     }
 
+    /**
+     * Opens a given URL in a Chrome Custom Tab for a better user experience than a standard WebView.
+     * It themes the custom tab to match the app's primary color.
+     * @param url The URL string to open.
+     */
+    private fun openUrlInCustomTab(url: String?) {
+        if (url.isNullOrBlank()) {
+            Toast.makeText(requireContext(), "No link available for this ad.", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
 
+        try {
+            // Define the color scheme for the Custom Tab toolbar.
+            val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(ContextCompat.getColor(requireContext(), R.color.primary))
+                .build()
+
+            // Build the Custom Tabs Intent.
+            val customTabsIntent = CustomTabsIntent.Builder()
+                .setDefaultColorSchemeParams(colorSchemeParams)
+                .setShowTitle(true) // Show the page title in the toolbar.
+                .build()
+
+            // Launch the URL.
+            customTabsIntent.launchUrl(requireContext(), url.toUri())
+
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                requireContext(),
+                "No web browser found to open the link.",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    /**
+     * Navigates to the detail screen for a specific book.
+     * @param bookId The ID of the book to display.
+     */
     private fun navigateToBookDetails(bookId: Int) {
-        // Use the generated Directions class to create the action, passing the bookId
+        // Use the generated Safe Args Directions class to create the navigation action.
         val action = HomeLibraryFragmentDirections.actionHomeToDetail(bookId = bookId)
         findNavController().navigate(action)
     }
 
+    /**
+     * Navigates to the detail screen for a specific video.
+     * @param videoId The ID of the video to display.
+     */
     private fun navigateToVideoDetails(videoId: Int) {
-        // Use the generated Directions class, this time passing the videoId
         val action = HomeLibraryFragmentDirections.actionHomeToDetail(videoId = videoId)
         findNavController().navigate(action)
     }
 
 
+    /**
+     * Called when the fragment is resumed. It updates the main activity's toolbar
+     * to reflect the correct state for the home screen (phone vs. tablet).
+     */
     override fun onResume() {
         super.onResume()
         val mainActivity = activity as? MainActivity
+        // Check if the device is a tablet and request the appropriate toolbar state.
         if (mainActivity?.isTablet() == true) {
             mainActivity.updateToolbar(MainActivity.ToolbarState.HomeTablet)
         } else {
@@ -144,17 +170,12 @@ class HomeLibraryFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
+    /**
+     * Called when the fragment's view is being destroyed.
+     * It's crucial to null out the binding reference here to prevent memory leaks.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

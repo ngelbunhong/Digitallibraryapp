@@ -1,51 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/materialToolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/image_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/no_downloads_yet"
-            android:maxWidth="@dimen/toolbar_logo_max_width"
-            android:maxHeight="@dimen/toolbar_logo_max_height"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_logo_app"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/toolbar_title_centered"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/inter_font"
-            android:gravity="center"
-            android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Details"
-            tools:visibility="visible" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.appbar.MaterialToolbar>
+    android:layout_height="?attr/actionBarSize"
+    android:theme="@style/ToolbarTitleStyle"
+    app:titleCentered="true"
+    app:titleTextAppearance="@style/ToolbarTitleStyle" />

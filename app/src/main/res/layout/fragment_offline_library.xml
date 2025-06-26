@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.offline.OfflineLibraryFragment">
 
     <TextView
@@ -14,15 +13,16 @@
         android:layout_margin="16dp"
         android:text="@string/status_downloaded"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchInputLayout"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_margin="16dp"
         android:hint="@string/search_lbl"
         app:boxBackgroundColor="@color/secondPrimary"
         app:boxCornerRadiusBottomEnd="12dp"
@@ -30,6 +30,9 @@
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeColor="@color/black_50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text"
         app:startIconDrawable="@drawable/ic_search"
         app:startIconTint="@color/black_50">
 
@@ -44,56 +47,70 @@
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- FrameLayout to hold the RecyclerView and Empty State. -->
-    <!-- The layout_weight="1" makes this view expand and take all available space. -->
-    <FrameLayout
-        android:layout_width="match_parent"
+    <!--
+         This RecyclerView is constrained between the search bar and the copyright text.
+         android:layout_height="0dp" tells it to fill the constrained space.
+         This allows the RecyclerView to scroll independently while the copyright stays at the bottom.
+    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
-        android:layout_weight="1">
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/copyright_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
+        tools:visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible" />
+    <!--
+         The empty state layout is constrained to the *exact same space* as the RecyclerView.
+         You can toggle their visibility in your code to show one or the other.
+    -->
+    <LinearLayout
+        android:id="@+id/empty_state_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/copyright_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
+        tools:ignore="UseCompoundDrawables"
+        tools:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/empty_state_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="gone"
-            tools:ignore="UseCompoundDrawables">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/image_content"
+            android:src="@drawable/icon_empty_box" />
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:contentDescription="@string/image_content"
-                android:src="@drawable/icon_empty_box" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_downloads_yet"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?android:attr/textColorSecondary" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/no_downloads_yet"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?android:attr/textColorSecondary" />
-        </LinearLayout>
-    </FrameLayout>
-
-    <!-- This will now be at the bottom of the screen -->
+    <!--
+        This TextView is constrained to the bottom of the parent layout.
+        This makes it a "sticky footer" that is always visible.
+    -->
     <TextView
         android:id="@+id/copyright_text"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/copyright_text"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
