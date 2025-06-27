@@ -3,7 +3,13 @@
     <style name="Base.Theme.DigitalLibrary" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:statusBarColor">@color/primary</item>
+        <!-- Use light or dark status bar icons -->
+        <!-- false = white icons (use this for dark status bar), true = dark icons -->
+        <item name="android:windowLightStatusBar">false</item>
+
+
     </style>
 
     <style name="Theme.DigitalLibrary" parent="Base.Theme.DigitalLibrary" />
