@@ -33,7 +33,7 @@
 
     <string name="search_hint">ស្វែងរកសៀវភៅ វីដេអូ និងច្រើនទៀត…</string>
     <string name="search_prompt">Start typing to find content.</string>
-    <string name="search_prompt_length">សូមបញ្ចូលយ៉ាងហោចណាស់ 3 តួអក្សរដើម្បីស្វែងរក។</string>
+    <string name="search_prompt_length">មិនទាន់មានទិន្នន័យនៅឡើយ</string>
     <string name="no_results_found">រកមិនឃើញលទ្ធផលសម្រាប់ការស្វែងរករបស់អ្នកទេ។</string>
 
     <string name="no_downloads_yet">មិនទាន់មានទិន្នន័យនៅឡើយ</string>

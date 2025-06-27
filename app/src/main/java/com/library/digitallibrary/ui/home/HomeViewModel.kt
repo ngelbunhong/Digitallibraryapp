@@ -8,10 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.digitallibrary.R
 import com.library.digitallibrary.data.models.ads.Ads
-import com.library.digitallibrary.data.models.book.Book
 import com.library.digitallibrary.data.models.home.HomeItem
 import com.library.digitallibrary.data.models.home.HomeScreenItem
-import com.library.digitallibrary.data.models.video.Video
 import com.library.digitallibrary.data.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
 
@@ -85,12 +83,25 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 items.add(HomeScreenItem.CardItemSection(cardItems))
                 items.add(
                     HomeScreenItem.TitledMixedSection(
-                        R.string.recent_announcements,
-                        top5Mixed
+                        titleResId = R.string.recent_announcements,
+                        items = top5Mixed,
+                        categoryId = "new_releases" // Unique ID for this category
                     )
                 )
-                items.add(HomeScreenItem.TitledVideoSection(R.string.collection_videos, videos))
-                items.add(HomeScreenItem.TitledBookSection(R.string.collection_books, books))
+                items.add(
+                    HomeScreenItem.TitledVideoSection(
+                        titleResId = R.string.collection_videos,
+                        videos = videos,
+                        categoryId = "trending_videos" // Unique ID for this category
+                    )
+                )
+                items.add(
+                    HomeScreenItem.TitledBookSection(
+                        titleResId = R.string.collection_books,
+                        books = books,
+                        categoryId = "featured_books" // Unique ID for this category
+                    )
+                )
                 items.add(HomeScreenItem.Copyright)
 
                 // --- ADD THIS LOGGING BLOCK ---

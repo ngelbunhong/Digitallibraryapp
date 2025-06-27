@@ -8,15 +8,16 @@
 
     <TextView
         android:id="@+id/title_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/inter_font"
-        android:layout_marginEnd="12dp"
         android:text="@string/search_lbl"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +60,8 @@
         android:layout_marginTop="8dp"
         android:clipToPadding="false"
         android:paddingHorizontal="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/copyright_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_input_layout" />
@@ -73,22 +75,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_input_layout"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
-    <TextView
-        android:id="@+id/message_text_view"
+    <!-- Group for the empty/message state -->
+    <LinearLayout
+        android:id="@+id/empty_state_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/search_prompt"
-        android:textAppearance="?attr/textAppearanceBodyLarge"
-        android:textColor="?android:attr/textColorSecondary"
+        android:gravity="center"
+        android:orientation="vertical"
         android:visibility="gone"
-        android:fontFamily="@font/inter_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_input_layout"
-        tools:visibility="visible" />
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/message_image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/icon_empty_box" />
+
+        <TextView
+            android:id="@+id/message_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_font"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="@string/search_prompt" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/copyright_text"
@@ -98,6 +118,7 @@
         android:gravity="center"
         android:text="@string/copyright_text"
         android:textSize="12sp"
+        android:fontFamily="@font/inter_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

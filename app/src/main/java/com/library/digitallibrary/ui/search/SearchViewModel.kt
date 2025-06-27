@@ -12,8 +12,6 @@ import kotlinx.coroutines.launch
 class SearchViewModel(application: Application) : AndroidViewModel(application) {
     private val apiService = RetrofitClient.create(application, useMock = true)
 
-    val searchQuery = MutableLiveData<String>()
-
     private val _searchResults = MutableLiveData<List<HomeItem>>()
     val searchResults: LiveData<List<HomeItem>> = _searchResults
 
@@ -26,27 +24,36 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     private var searchJob: Job? = null
     private val debouncePeriod: Long = 500 // 500ms delay
 
+    init {
+        // Set the initial state when the ViewModel is created
+        _isLoading.value = false
+        _searchResults.value = emptyList()
+        _message.value = getApplication<Application>().getString(R.string.search_prompt)
+    }
+
     fun onSearchQueryChanged(query: String) {
         searchJob?.cancel() // Cancel the previous search job
         searchJob = viewModelScope.launch {
-            if (query.length < 3) {
-                // It correctly clears the results and sets a message...
-                _isLoading.value = false // THE FIX: Explicitly turn off loading.
+            if (query.length < 2) {
+                _isLoading.value = false
                 _searchResults.value = emptyList()
-                _message.value = getApplication<Application>().getString(R.string.search_prompt_length)
-
-                // ...but then it exits here, leaving _isLoading stuck on 'true' from the last search.
+                // Only show length prompt if the user has typed something
+                if (query.isNotEmpty()) {
+                    _message.value = getApplication<Application>().getString(R.string.search_prompt_length)
+                } else {
+                    _message.value = getApplication<Application>().getString(R.string.no_downloads_yet)
+                }
                 return@launch
             }
 
             _isLoading.value = true
-            _message.value = null // Clear previous messages
+            _message.value = null // Clear previous messages while searching
+            _searchResults.value = emptyList() // Clear previous results
 
             delay(debouncePeriod) // Wait for the user to stop typing
 
             try {
-                // In a real app, your API would have a search endpoint.
-                // We'll simulate it by filtering your mock data.
+                // Simulate API call
                 val books = apiService.mockBooks().filter {
                     it.title.contains(query, ignoreCase = true) || it.author.contains(query, ignoreCase = true)
                 }
@@ -59,6 +66,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
                 _searchResults.value = results
                 if (results.isEmpty()) {
+                    // Set message if the search yields no results
                     _message.value = getApplication<Application>().getString(R.string.no_results_found)
                 }
 

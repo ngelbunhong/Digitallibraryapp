@@ -6,6 +6,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.updateLayoutParams
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -46,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        hideSystemBars()
+
         initView()
     }
 
@@ -84,7 +90,8 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomNav.visibility = if (isMainDestination) View.VISIBLE else View.GONE
             } else {
                 // For tablets, hide the rail if it's open and we navigate to an inner screen.
-                val isInnerScreen = destination.id == R.id.nav_detail || destination.id == R.id.nav_video
+                val isInnerScreen =
+                    destination.id == R.id.nav_detail || destination.id == R.id.nav_video
                 if (isInnerScreen && isRailVisible) {
                     toggleRail()
                 }
@@ -188,5 +195,15 @@ class MainActivity : AppCompatActivity() {
                 isRailVisible = true
             }.start()
         }
+    }
+
+    private fun hideSystemBars() {
+        val windowInsetsController =
+            WindowCompat.getInsetsController(window, window.decorView)
+        // Configure the behavior of the system bars
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        // Hide both the status bar and the navigation bar
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
     }
 }

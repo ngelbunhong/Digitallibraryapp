@@ -2,6 +2,7 @@ package com.library.digitallibrary.ui.home
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.library.digitallibrary.data.models.book.Book
 import com.library.digitallibrary.data.models.video.Video
 import com.library.digitallibrary.databinding.FragmentHomeLibraryBinding
 import androidx.core.net.toUri
+import com.library.digitallibrary.data.models.home.HomeScreenItem
 
 /**
  * The main screen of the application, displaying a dynamic list of content sections.
@@ -56,10 +58,19 @@ class HomeLibraryFragment : Fragment() {
         // Create the adapter, providing an implementation for the listener interface
         // to handle all click events delegated from the adapter's view holders.
         val homeAdapter = HomeAdapter(object : HomeAdapter.HomeAdapterListener {
-            override fun onSeeMoreClicked(sectionTitle: String) {
-                // TODO: Implement navigation to a full list screen for the given section.
-                Toast.makeText(requireContext(), "See More for $sectionTitle", Toast.LENGTH_SHORT)
-                    .show()
+            override fun onSeeMoreClicked(item: HomeScreenItem) {
+                when (item) {
+                    is HomeScreenItem.TitledBookSection -> {
+                        findNavController().navigate(R.id.action_home_to_book)
+                    }
+                    is HomeScreenItem.TitledVideoSection -> {
+                        findNavController().navigate(R.id.action_home_to_video)
+                    }
+                    is HomeScreenItem.TitledMixedSection -> {
+                        Toast.makeText(requireContext(), "Navigation for mixed section not defined.", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
             }
 
             override fun onBookItemClicked(book: Book) {

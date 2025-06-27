@@ -32,7 +32,7 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
     ListAdapter<HomeScreenItem, RecyclerView.ViewHolder>(HomeScreenItemDiffCallback()) {
 
     interface HomeAdapterListener {
-        fun onSeeMoreClicked(sectionTitle: String)
+        fun onSeeMoreClicked(item: HomeScreenItem)
         fun onBookItemClicked(book: Book)
         fun onVideoItemClicked(video: Video)
         fun onAdClicked(ad: Ads)
@@ -96,7 +96,7 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
         fun bindBooks(item: HomeScreenItem.TitledBookSection) {
             val titleText = itemView.context.getString(item.titleResId)
             sectionTitle.text = titleText
-            seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(titleText) }
+            seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(item) }
 
             val bookAdapter = BookAdapter { book -> listener.onBookItemClicked(book) }
             innerRecyclerView.apply {
@@ -110,7 +110,7 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
         fun bindVideos(item: HomeScreenItem.TitledVideoSection) {
             val titleText = itemView.context.getString(item.titleResId)
             sectionTitle.text = titleText
-            seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(titleText) }
+            seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(item) }
 
             val videoAdapter = VideoAdapter { video -> listener.onVideoItemClicked(video) }
             val spanCount = if ((itemView.context.resources.configuration.smallestScreenWidthDp >= 600)) 2 else 2
@@ -125,7 +125,7 @@ class HomeAdapter(private val listener: HomeAdapterListener) :
         fun bindMixedGrid(item: HomeScreenItem.TitledMixedSection) {
             val titleText = itemView.context.getString(item.titleResId)
             sectionTitle.text = titleText
-            seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(titleText) }
+            seeMoreButton.setOnClickListener { listener.onSeeMoreClicked(item) }
 
             val mixedAdapter = MixedContentAdapter(object : MixedContentAdapter.ItemClickListener {
                 override fun onBookClicked(book: Book) { listener.onBookItemClicked(book) }

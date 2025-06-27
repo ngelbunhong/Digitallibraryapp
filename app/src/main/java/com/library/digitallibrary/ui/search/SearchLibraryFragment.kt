@@ -14,7 +14,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.library.digitallibrary.MainActivity
 import com.library.digitallibrary.data.adapter.MixedContentAdapter
 import com.library.digitallibrary.data.models.book.Book
 import com.library.digitallibrary.data.models.video.Video
@@ -26,7 +25,6 @@ class SearchLibraryFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: SearchViewModel
     private lateinit var resultsAdapter: MixedContentAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,25 +42,17 @@ class SearchLibraryFragment : Fragment() {
         setupRecyclerView()
         setupSearchInput()
         observeViewModel()
-
-        // Call the new setup function for hiding the keyboard
         setupHideKeyboardOnTap(view)
     }
 
-
-    // --- NEW FUNCTION TO HIDE KEYBOARD ON TAP ---
     @SuppressLint("ClickableViewAccessibility")
     private fun setupHideKeyboardOnTap(view: View) {
-        // Set up a listener on the parent layout.
-        // If the view is not an EditText, set a touch listener to hide the keyboard.
         if (view !is EditText) {
             view.setOnTouchListener { _, _ ->
                 hideSoftKeyboard()
-                false // Return false so the touch event is not consumed and can be passed to other views.
+                false
             }
         }
-
-        // If the view is a container, recursively apply the listener to its children.
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val innerView = view.getChildAt(i)
@@ -71,13 +61,12 @@ class SearchLibraryFragment : Fragment() {
         }
     }
 
-    // --- NEW HELPER FUNCTION TO HIDE THE KEYBOARD ---
     private fun hideSoftKeyboard() {
         activity?.let { act ->
             val inputMethodManager = act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             act.currentFocus?.let { focusedView ->
                 inputMethodManager.hideSoftInputFromWindow(focusedView.windowToken, 0)
-                focusedView.clearFocus() // Optional: clear focus from the EditText
+                focusedView.clearFocus()
             }
         }
     }
@@ -85,11 +74,13 @@ class SearchLibraryFragment : Fragment() {
     private fun setupRecyclerView() {
         resultsAdapter = MixedContentAdapter(object: MixedContentAdapter.ItemClickListener{
             override fun onBookClicked(book: Book) {
-                Toast.makeText(requireContext(),"Item $book", Toast.LENGTH_SHORT).show()
+                // TODO: Navigate to book details
+                Toast.makeText(requireContext(),"Book Clicked: ${book.title}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onVideoClicked(video: Video) {
-                Toast.makeText(requireContext(),"Item $video", Toast.LENGTH_SHORT).show()
+                // TODO: Navigate to video details
+                Toast.makeText(requireContext(),"Video Clicked: ${video.title}", Toast.LENGTH_SHORT).show()
             }
         })
         val spanCount = if ((resources.configuration.smallestScreenWidthDp >= 600)) 3 else 2
@@ -102,17 +93,18 @@ class SearchLibraryFragment : Fragment() {
     private fun setupSearchInput(){
         binding.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Trigger search as user types
                 viewModel.onSearchQueryChanged(s.toString())
             }
+            override fun afterTextChanged(s: Editable?) {}
         })
     }
 
     private fun observeViewModel() {
         viewModel.searchResults.observe(viewLifecycleOwner) { results ->
             resultsAdapter.submitList(results)
-            // Show/hide the main list based on whether there are results
+            // Only show recycler view if there are results
             binding.searchResultsRecyclerView.visibility = if (results.isNotEmpty()) View.VISIBLE else View.GONE
         }
 
@@ -122,15 +114,16 @@ class SearchLibraryFragment : Fragment() {
 
         viewModel.message.observe(viewLifecycleOwner) { message ->
             if (message != null) {
-                binding.messageTextView.visibility = View.VISIBLE
+                // If there's a message, show the empty state container and set the text
+                binding.emptyStateContainer.visibility = View.VISIBLE
                 binding.messageTextView.text = message
             } else {
-                binding.messageTextView.visibility = View.GONE
+                // If there's no message (i.e., we have results), hide the container
+                binding.emptyStateContainer.visibility = View.GONE
             }
         }
     }
 
-    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
