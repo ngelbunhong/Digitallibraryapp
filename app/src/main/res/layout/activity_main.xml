@@ -71,7 +71,7 @@
                 android:background="@color/navigation_color"
                 android:visibility="gone"
                 app:itemHorizontalTranslationEnabled="true"
-                app:labelVisibilityMode="unlabeled"
+                app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_nav_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

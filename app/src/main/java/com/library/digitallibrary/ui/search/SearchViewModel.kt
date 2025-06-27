@@ -28,7 +28,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         // Set the initial state when the ViewModel is created
         _isLoading.value = false
         _searchResults.value = emptyList()
-        _message.value = getApplication<Application>().getString(R.string.search_prompt)
+        _message.value = getApplication<Application>().getString(R.string.no_downloads_yet)
     }
 
     fun onSearchQueryChanged(query: String) {
